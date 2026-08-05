@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#05070c" />
+  <meta name="description" content="Qibla Labs — Astronomical navigation technologies and QiblaAstro." />
+  <title>Qibla Labs — Astronomical Navigation Technologies</title>
+  <style>
+    :root{
+      --bg:#05070c;
+      --bg2:#0b1220;
+      --panel:rgba(255,255,255,.06);
+      --panel-2:rgba(255,255,255,.035);
+      --line:rgba(255,255,255,.11);
+      --text:#f7f9fb;
+      --muted:#9ba6b7;
+      --gold:#d4af37;
+      --gold2:#f0d67d;
+      --blue:#2db4ff;
+      --emerald:#31c48d;
+      --silver:#c8cdd5;
+      --danger:#e54b4b;
+      --radius:28px;
+      --shadow:0 28px 80px rgba(0,0,0,.35);
+      --container:min(1180px, calc(100% - 34px));
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(45,180,255,.12), transparent 28%),
+        radial-gradient(circle at 85% 22%, rgba(212,175,55,.11), transparent 24%),
+        linear-gradient(180deg,#04060a 0%,#07101b 47%,#04060a 100%);
+      color:var(--text);
+      font-family:Inter,"Noto Sans Arabic",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      line-height:1.7;
+      overflow-x:hidden;
+    }
+    body.en{direction:ltr}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{width:var(--container);margin:auto}
+    .glass{
+      background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+    }
+    .nav{
+      position:fixed;z-index:50;top:16px;left:50%;transform:translateX(-50%);
+      width:var(--container);display:flex;align-items:center;justify-content:space-between;
+      padding:12px 16px;border-radius:20px;background:rgba(5,7,12,.62);
+      border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(18px)
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.04em}
+    .brand-mark{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+      background:
+        radial-gradient(circle at 50% 35%,rgba(255,255,255,.9) 0 2px,transparent 3px),
+        conic-gradient(from 210deg,var(--gold),var(--blue),var(--gold));
+      color:#041018;box-shadow:0 0 30px rgba(212,175,55,.18)
+    }
+    .brand small{display:block;color:var(--muted);font-size:.69rem;font-weight:600;letter-spacing:.12em}
+    .nav-links{display:flex;gap:20px;color:#d7dce5;font-size:.9rem}
+    .nav-actions{display:flex;gap:9px}
+    .pill,.btn{
+      border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);
+      border-radius:999px;padding:10px 16px;cursor:pointer;transition:.25s ease;
+    }
+    .pill:hover,.btn:hover{transform:translateY(-2px);border-color:rgba(212,175,55,.55)}
+    .btn.primary{
+      background:linear-gradient(135deg,var(--gold),var(--gold2));color:#151004;
+      border-color:transparent;font-weight:800;box-shadow:0 16px 38px rgba(212,175,55,.2)
+    }
+    .hero{
+      min-height:100svh;position:relative;display:grid;place-items:center;padding:130px 0 70px;
+      isolation:isolate;
+    }
+    #stars{position:absolute;inset:0;width:100%;height:100%;z-index:-3}
+    .hero:before{
+      content:"";position:absolute;inset:auto 0 0;height:43%;
+      background:radial-gradient(ellipse at 50% 100%,rgba(45,180,255,.24),transparent 63%);
+      z-index:-2;pointer-events:none
+    }
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+    .eyebrow{display:inline-flex;gap:10px;align-items:center;color:var(--blue);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem}
+    .eyebrow:before{content:"";width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--blue))}
+    h1{font-size:clamp(3rem,7vw,6.5rem);line-height:.94;margin:22px 0 24px;letter-spacing:-.055em}
+    .gradient-text{
+      background:linear-gradient(135deg,#fff 10%,var(--gold2) 48%,var(--blue) 92%);
+      -webkit-background-clip:text;background-clip:text;color:transparent
+    }
+    .hero p{font-size:clamp(1rem,1.6vw,1.22rem);color:#c5ccd7;max-width:680px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .hero-visual{position:relative;min-height:540px;display:grid;place-items:center}
+    .orbit{
+      width:min(510px,90vw);aspect-ratio:1;border-radius:50%;position:absolute;
+      border:1px solid rgba(255,255,255,.1);
+      background:
+        radial-gradient(circle at 50% 50%,rgba(45,180,255,.08),transparent 48%),
+        repeating-radial-gradient(circle at 50% 50%,transparent 0 58px,rgba(255,255,255,.045) 59px 60px);
+      animation:spin 34s linear infinite;
+    }
+    .earth{
+      width:300px;aspect-ratio:1;border-radius:50%;position:relative;overflow:hidden;
+      background:
+        radial-gradient(circle at 35% 25%,rgba(255,255,255,.35),transparent 7%),
+        radial-gradient(circle at 64% 62%,rgba(49,196,141,.5),transparent 18%),
+        radial-gradient(circle at 32% 66%,rgba(49,196,141,.35),transparent 19%),
+        radial-gradient(circle at 60% 34%,rgba(212,175,55,.16),transparent 8%),
+        linear-gradient(145deg,#18365d,#09203b 50%,#03101d);
+      box-shadow:inset -38px -26px 60px rgba(0,0,0,.58),0 0 70px rgba(45,180,255,.28);
+      animation:float 6s ease-in-out infinite;
+    }
+    .earth:before{
+      content:"";position:absolute;inset:-10%;
+      background:repeating-linear-gradient(14deg,transparent 0 17px,rgba(255,255,255,.035) 18px 19px);
+      transform:rotate(8deg)
+    }
+    .earth:after{
+      content:"";position:absolute;left:51%;top:48%;width:11px;height:11px;border-radius:3px;
+      background:var(--gold);box-shadow:0 0 14px 5px rgba(212,175,55,.65)
+    }
+    .phone{
+      position:absolute;right:5%;top:8%;width:175px;height:350px;border-radius:36px;
+      border:1px solid rgba(255,255,255,.24);
+      background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(5,7,12,.76));
+      box-shadow:0 28px 70px rgba(0,0,0,.45),inset 0 0 0 8px rgba(0,0,0,.35);
+      transform:rotate(-8deg);animation:phone 7s ease-in-out infinite;
+      overflow:hidden;
+    }
+    .phone:before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:55px;height:8px;border-radius:20px;background:#111}
+    .phone-screen{
+      position:absolute;inset:23px 10px 10px;border-radius:28px;
+      background:
+        radial-gradient(circle at 50% 26%,rgba(212,175,55,.18),transparent 24%),
+        linear-gradient(180deg,#08111f,#05070c);
+      padding:50px 14px 14px;text-align:center
+    }
+    .mini-kaba{width:54px;height:54px;background:#0a0a0a;border:2px solid var(--gold);margin:auto;border-radius:4px;box-shadow:0 0 22px rgba(212,175,55,.3)}
+    .mini-ring{width:120px;height:120px;border-radius:50%;border:1px solid rgba(45,180,255,.55);margin:24px auto;position:relative}
+    .mini-ring:after{content:"";position:absolute;inset:12px;border-radius:50%;border:1px dashed rgba(212,175,55,.5)}
+    .sun,.moon{
+      position:absolute;width:34px;height:34px;border-radius:50%;
+      box-shadow:0 0 34px currentColor;
+    }
+    .sun{background:#f4c95d;color:#f4c95d;left:7%;top:22%}
+    .moon{background:#dbe4ef;color:#dbe4ef;right:13%;bottom:14%}
+    .beam{
+      position:absolute;width:2px;height:320px;background:linear-gradient(180deg,transparent,var(--gold),transparent);
+      transform:rotate(38deg);filter:drop-shadow(0 0 8px var(--gold));opacity:.7
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes float{50%{transform:translateY(-14px) scale(1.01)}}
+    @keyframes phone{50%{transform:rotate(-4deg) translateY(-14px)}}
+    .section{padding:110px 0;position:relative}
+    .section-head{max-width:760px;margin-bottom:42px}
+    .section h2{font-size:clamp(2rem,4vw,4.1rem);line-height:1.07;margin:12px 0 18px;letter-spacing:-.035em}
+    .section p{color:var(--muted)}
+    .grid{display:grid;gap:18px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-6{grid-template-columns:repeat(6,1fr)}
+    .card{padding:24px;border-radius:var(--radius);position:relative;overflow:hidden}
+    .card:after{content:"";position:absolute;inset:auto -25% -45% auto;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(45,180,255,.12),transparent 70%)}
+    .icon{
+      width:54px;height:54px;border-radius:18px;display:grid;place-items:center;
+      background:linear-gradient(145deg,rgba(212,175,55,.18),rgba(45,180,255,.12));
+      border:1px solid rgba(255,255,255,.1);font-size:1.35rem;margin-bottom:18px
+    }
+    .card h3{margin:0 0 8px;font-size:1.2rem}
+    .problem-card{min-height:220px}
+    .split{
+      display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center
+    }
+    .diagram{
+      min-height:520px;border-radius:36px;position:relative;overflow:hidden;
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px),
+        radial-gradient(circle at center,rgba(45,180,255,.1),transparent 45%);
+      background-size:40px 40px,40px 40px,auto
+    }
+    .node{
+      position:absolute;padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(5,7,12,.8);font-size:.82rem;box-shadow:0 10px 30px rgba(0,0,0,.25)
+    }
+    .node strong{display:block;color:var(--gold2)}
+    .node:nth-child(1){left:7%;top:12%}.node:nth-child(2){right:7%;top:18%}
+    .node:nth-child(3){left:10%;bottom:18%}.node:nth-child(4){right:8%;bottom:12%}
+    .solver-core{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:180px;height:180px;border-radius:50%;display:grid;place-items:center;text-align:center;
+      background:radial-gradient(circle,rgba(212,175,55,.22),rgba(45,180,255,.08) 55%,transparent 70%);
+      border:1px solid rgba(212,175,55,.45);box-shadow:0 0 70px rgba(212,175,55,.15)
+    }
+    .line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);transform-origin:left center}
+    .gates{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    .gate{text-align:center;padding:22px 10px;border-radius:20px}
+    .gate b{display:block;font-size:.9rem;margin-top:12px}
+    .status{display:inline-flex;align-items:center;gap:8px;color:var(--emerald);font-weight:800}
+    .status:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--emerald);box-shadow:0 0 18px var(--emerald)}
+    .metric{padding:22px;border-radius:24px}
+    .metric .value{font-size:2.1rem;font-weight:900;letter-spacing:-.04em}
+    .bar{height:8px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;margin-top:14px}
+    .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:99px}
+    .showcase{
+      min-height:560px;border-radius:40px;padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center
+    }
+    .screen-stack{position:relative;min-height:430px}
+    .mock{
+      position:absolute;width:210px;height:420px;border-radius:34px;border:1px solid rgba(255,255,255,.15);
+      background:linear-gradient(180deg,#0a1625,#05070c);box-shadow:0 30px 80px rgba(0,0,0,.4)
+    }
+    .mock:nth-child(1){left:5%;top:20px;transform:rotate(-8deg)}
+    .mock:nth-child(2){left:31%;top:0;z-index:2}
+    .mock:nth-child(3){left:57%;top:30px;transform:rotate(8deg)}
+    .mock:before{content:"";position:absolute;inset:22px 12px 12px;border-radius:26px;background:radial-gradient(circle at 50% 23%,rgba(212,175,55,.14),transparent 25%),linear-gradient(180deg,#07101b,#03060a)}
+    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+    .timeline .step{padding:18px;border-top:2px solid var(--gold)}
+    .privacy{display:grid;grid-template-columns:1fr .8fr;gap:28px;align-items:center}
+    .shield{width:260px;aspect-ratio:1;margin:auto;border-radius:44% 44% 56% 56%;display:grid;place-items:center;font-size:5rem;background:radial-gradient(circle,rgba(49,196,141,.2),transparent 64%);border:1px solid rgba(49,196,141,.4);box-shadow:0 0 70px rgba(49,196,141,.12)}
+    footer{padding:70px 0 34px;border-top:1px solid rgba(255,255,255,.08)}
+    .footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
+    .footer-grid h4{margin-top:0}
+    .footer-grid a{display:block;color:var(--muted);margin:7px 0}
+    .copyright{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;color:var(--muted);font-size:.88rem}
+    .reveal{opacity:0;transform:translateY(24px);transition:.75s ease}
+    .reveal.show{opacity:1;transform:none}
+    @media (max-width:980px){
+      .nav-links{display:none}
+      .hero-grid,.split,.showcase,.privacy{grid-template-columns:1fr}
+      .hero-copy{text-align:center}
+      .hero p{margin-inline:auto}
+      .cta{justify-content:center}
+      .hero-visual{min-height:480px}
+      .grid-3{grid-template-columns:repeat(2,1fr)}
+      .gates{grid-template-columns:repeat(3,1fr)}
+      .timeline{grid-template-columns:repeat(2,1fr)}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:620px){
+      .nav{top:8px}
+      .brand small{display:none}
+      .nav-actions .pill:first-child{display:none}
+      .hero{padding-top:110px}
+      h1{font-size:3.45rem}
+      .hero-visual{min-height:390px}
+      .earth{width:235px}
+      .orbit{width:350px}
+      .phone{width:130px;height:270px;right:1%}
+      .phone-screen{padding-top:38px}
+      .mini-ring{width:88px;height:88px}
+      .grid-2,.grid-3{grid-template-columns:1fr}
+      .gates{grid-template-columns:repeat(2,1fr)}
+      .timeline{grid-template-columns:1fr}
+      .screen-stack{transform:scale(.78);transform-origin:center top;min-height:350px}
+      .footer-grid{grid-template-columns:1fr}
+      .copyright{flex-direction:column;gap:8px}
+      .section{padding:82px 0}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="#home">
+      <span class="brand-mark">Q</span>
+      <span>QIBLA LABS<small>ASTRONOMICAL NAVIGATION</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#technology">التقنية</a>
+      <a href="#how">كيف يعمل</a>
+      <a href="#quality">الجودة</a>
+      <a href="#product">QiblaAstro</a>
+      <a href="#research">الأبحاث</a>
+    </div>
+    <div class="nav-actions">
+      <button class="pill" id="langBtn">EN</button>
+      <a class="pill" href="#download">جرّب التطبيق</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <canvas id="stars"></canvas>
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow" data-ar="تقنيات الملاحة الفلكية" data-en="Astronomical Navigation Technologies">تقنيات الملاحة الفلكية</span>
+        <h1><span class="gradient-text" data-ar="السماء تعرف الطريق." data-en="The Sky Knows The Way.">السماء تعرف الطريق.</span></h1>
+        <p data-ar="جيل جديد من التحقق من اتجاه القبلة يجمع بين علم الفلك، والهندسة الجيوديسية، وهندسة الكاميرا، ومرجع الجاذبية — دون الاعتماد على البوصلة المغناطيسية في القياس الفلكي."
+           data-en="A new generation of Qibla verification combining astronomy, geodesy, camera geometry and gravity reference — without relying on the magnetometer for the astronomical measurement.">
+          جيل جديد من التحقق من اتجاه القبلة يجمع بين علم الفلك، والهندسة الجيوديسية، وهندسة الكاميرا، ومرجع الجاذبية — دون الاعتماد على البوصلة المغناطيسية في القياس الفلكي.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#technology" data-ar="استكشف التقنية" data-en="Explore the Technology">استكشف التقنية</a>
+          <a class="btn" href="#product" data-ar="اكتشف QiblaAstro" data-en="Discover QiblaAstro">اكتشف QiblaAstro</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="orbit"></div><div class="beam"></div><div class="earth"></div>
+        <div class="sun"></div><div class="moon"></div>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="mini-kaba"></div>
+            <div class="mini-ring"></div>
+            <div style="font-weight:800;color:var(--gold)">136.4°</div>
+            <div style="color:var(--muted);font-size:.72rem">ASTRONOMICAL QIBLA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-ar="المشكلة" data-en="The Problem">المشكلة</span>
+        <h2 data-ar="البوصلة المغناطيسية ليست مرجعًا ثابتًا دائمًا." data-en="The magnetometer is not always a stable reference.">البوصلة المغناطيسية ليست مرجعًا ثابتًا دائمًا.</h2>
+        <p data-ar="المعادن، والمباني، والسيارات، والمجالات الكهربائية، وسوء المعايرة قد تغيّر قراءة المستشعر دون أن يلاحظ المستخدم."
+           data-en="Metal, buildings, vehicles, electrical fields and poor calibration can alter the sensor reading without the user noticing.">
+          المعادن، والمباني، والسيارات، والمجالات الكهربائية، وسوء المعايرة قد تغيّر قراءة المستشعر دون أن يلاحظ المستخدم.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        <article class="card glass problem-card reveal"><div class="icon">⌁</div><h3 data-ar="تشويش مغناطيسي" data-en="Magnetic Interference">تشويش مغناطيسي</h3><p data-ar="تتأثر القراءة بالأجسام المعدنية والمجالات القريبة." data-en="Readings can be affected by nearby metal and electromagnetic fields.">تتأثر القراءة بالأجسام المعدنية والمجالات القريبة.</p></article>
+        <article class="card glass problem-card reveal"><div class="icon">△</div><h3 data-ar="انجراف المستشعر" data-en="Sensor Drift">انجراف المستشعر</h3><p data-ar="قد يتغير الاتجاه رغم ثبات الهاتف أو بعد إعادة فتح التطبيق." data-en="Direction can shift even when the phone is steady or after reopening the app.">قد يتغير الاتجاه رغم ثبات الهاتف أو بعد إعادة فتح التطبيق.</p></article>
+        <article class="card glass problem-card reveal"><div class="icon">◎</div><h3 data-ar="معايرة غير مؤكدة" data-en="Uncertain Calibration">معايرة غير مؤكدة</h3><p data-ar="لا يعرف المستخدم دائمًا إن كانت البوصلة قد عُيّرت فعليًا." data-en="Users cannot always tell whether the compass is truly calibrated.">لا يعرف المستخدم دائمًا إن كانت البوصلة قد عُيّرت فعليًا.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="technology">
+    <div class="container split">
+      <div class="section-head reveal">
+        <span class="eyebrow">ASTRONOMICAL SOLVER FOUNDATION</span>
+        <h2 data-ar="حين تصبح السماء مرجع الاتجاه." data-en="When the sky becomes the directional reference.">حين تصبح السماء مرجع الاتجاه.</h2>
+        <p data-ar="يحسب QiblaAstro موقع الشمس أو القمر، ويحوّل موضع الجرم داخل الصورة إلى شعاع بصري، ثم يستخدم مرجع الجاذبية لحل وضع الكاميرا واتجاه محورها الحقيقي."
+           data-en="QiblaAstro computes the Sun or Moon position, converts the detected image point into a camera ray, then uses gravity to solve the camera pose and true forward heading.">
+          يحسب QiblaAstro موقع الشمس أو القمر، ويحوّل موضع الجرم داخل الصورة إلى شعاع بصري، ثم يستخدم مرجع الجاذبية لحل وضع الكاميرا واتجاه محورها الحقيقي.
+        </p>
+        <div class="status" data-ar="قياس فلكي مستقل عن البوصلة المغناطيسية" data-en="Astronomical measurement independent of the magnetometer">قياس فلكي مستقل عن البوصلة المغناطيسية</div>
+      </div>
+      <div class="diagram glass reveal">
+        <div class="node"><strong>01</strong><span data-ar="رصد الجرم" data-en="Celestial Detection">رصد الجرم</span></div>
+        <div class="node"><strong>02</strong><span data-ar="إسقاط الكاميرا" data-en="Camera Projection">إسقاط الكاميرا</span></div>
+        <div class="node"><strong>03</strong><span data-ar="مرجع الجاذبية" data-en="Gravity Reference">مرجع الجاذبية</span></div>
+        <div class="node"><strong>04</strong><span data-ar="حل وضع الكاميرا" data-en="Camera Pose Solve">حل وضع الكاميرا</span></div>
+        <div class="solver-core"><div><b>ASTRONOMICAL<br>SOLVER</b><br><small>POSE · GEOMETRY · TIME</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-ar="كيف يعمل" data-en="How It Works">كيف يعمل</span>
+        <h2 data-ar="من الموقع إلى قياس اتجاه القبلة." data-en="From location to a measured Qibla direction.">من الموقع إلى قياس اتجاه القبلة.</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="card glass reveal"><div class="icon">⌖</div><h3>1. GNSS</h3><p data-ar="تحديد موقع الراصد وحساب اتجاه الكعبة المرجعي." data-en="Determine the observer location and compute the reference Qibla bearing.">تحديد موقع الراصد وحساب اتجاه الكعبة المرجعي.</p></article>
+        <article class="card glass reveal"><div class="icon">☀</div><h3 data-ar="2. الموضع الفلكي" data-en="2. Celestial Position">2. الموضع الفلكي</h3><p data-ar="حساب سمت وارتفاع الشمس أو القمر في لحظة الرصد." data-en="Compute the Sun or Moon azimuth and altitude at observation time.">حساب سمت وارتفاع الشمس أو القمر في لحظة الرصد.</p></article>
+        <article class="card glass reveal"><div class="icon">◉</div><h3 data-ar="3. مؤشر المحاذاة" data-en="3. Alignment Reticle">3. مؤشر المحاذاة</h3><p data-ar="وضع المؤشر في المكان المتوقع للجرم عندما يكون الهاتف على محور القبلة." data-en="Place the reticle where the body should appear when the phone is aligned with Qibla.">وضع المؤشر في المكان المتوقع للجرم عندما يكون الهاتف على محور القبلة.</p></article>
+        <article class="card glass reveal"><div class="icon">▣</div><h3 data-ar="4. الرصد" data-en="4. Observation">4. الرصد</h3><p data-ar="اكتشاف الجرم والتحقق من شكله وحجمه وثباته عبر عدة إطارات." data-en="Detect the body and validate its shape, size and stability across frames.">اكتشاف الجرم والتحقق من شكله وحجمه وثباته عبر عدة إطارات.</p></article>
+        <article class="card glass reveal"><div class="icon">↓</div><h3 data-ar="5. الجاذبية والوضع" data-en="5. Gravity & Pose">5. الجاذبية والوضع</h3><p data-ar="استخدام الجاذبية وهندسة الكاميرا لحل اتجاه محور الهاتف الحقيقي." data-en="Use gravity and camera geometry to solve the true phone forward axis.">استخدام الجاذبية وهندسة الكاميرا لحل اتجاه محور الهاتف الحقيقي.</p></article>
+        <article class="card glass reveal"><div class="icon">✓</div><h3 data-ar="6. القبول أو الرفض" data-en="6. Accept or Reject">6. القبول أو الرفض</h3><p data-ar="لا تُحفظ النتيجة إلا بعد اجتياز جميع بوابات الجودة." data-en="The result is stored only after all quality gates pass.">لا تُحفظ النتيجة إلا بعد اجتياز جميع بوابات الجودة.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="quality">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-ar="بوابات الجودة" data-en="Quality Gates">بوابات الجودة</span>
+        <h2 data-ar="لا تُقبل كل قراءة." data-en="Not every reading is accepted.">لا تُقبل كل قراءة.</h2>
+        <p data-ar="ست إشارات مستقلة تقيّم الرصد قبل اعتماد النتيجة." data-en="Six independent signals evaluate the observation before a result is accepted.">ست إشارات مستقلة تقيّم الرصد قبل اعتماد النتيجة.</p>
+      </div>
+      <div class="gates">
+        <div class="gate glass reveal"><div class="icon" style="margin:auto">◉</div><b>Detection</b></div>
+        <div class="gate glass reveal"><div class="icon" style="margin:auto">▱</div><b>Projection</b></div>
+        <div class="gate glass reveal"><div class="icon" style="margin:auto">↓</div><b>Gravity</b></div>
+        <div class="gate glass reveal"><div class="icon" style="margin:auto">⟳</div><b>Pose</b></div>
+        <div class="gate glass reveal"><div class="icon" style="margin:auto">⌁</div><b>Timing</b></div>
+        <div class="gate glass reveal"><div class="icon" style="margin:auto">✓</div><b>Geometry</b></div>
+      </div>
+      <div class="grid grid-3" style="margin-top:18px">
+        <div class="metric glass reveal"><small>Detection Confidence</small><div class="value">92%</div><div class="bar"><i style="width:92%"></i></div></div>
+        <div class="metric glass reveal"><small>Pose Quality</small><div class="value">89%</div><div class="bar"><i style="width:89%"></i></div></div>
+        <div class="metric glass reveal"><small>Verification Status</small><div class="value" style="color:var(--emerald)">ACCEPTED</div><div class="bar"><i style="width:100%;background:var(--emerald)"></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="product">
+    <div class="container">
+      <div class="showcase glass reveal">
+        <div>
+          <span class="eyebrow">QIBLAASTRO</span>
+          <h2 data-ar="أكثر من بوصلة." data-en="More than a compass.">أكثر من بوصلة.</h2>
+          <p data-ar="واجهة Horizon تجمع القبلة الحسابية، والقياس الفلكي، ومواقيت الصلاة، والقرآن، والأذكار، والعمل دون إنترنت في تجربة واحدة."
+             data-en="The Horizon interface brings together computational Qibla, astronomical measurement, prayer times, Quran, Azkar and offline use in one experience.">
+            واجهة Horizon تجمع القبلة الحسابية، والقياس الفلكي، ومواقيت الصلاة، والقرآن، والأذكار، والعمل دون إنترنت في تجربة واحدة.
+          </p>
+          <div class="cta"><a class="btn primary" href="#download" data-ar="جرّب QiblaAstro" data-en="Try QiblaAstro">جرّب QiblaAstro</a></div>
+        </div>
+        <div class="screen-stack">
+          <div class="mock"></div><div class="mock"></div><div class="mock"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="research">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-ar="البحث والتطوير" data-en="Research & Development">البحث والتطوير</span>
+        <h2 data-ar="من فكرة إلى أساس هندسي قابل للاختبار." data-en="From an idea to a testable engineering foundation.">من فكرة إلى أساس هندسي قابل للاختبار.</h2>
+      </div>
+      <div class="timeline">
+        <div class="step glass reveal"><b>01</b><h3>Concept</h3><p data-ar="فصل القبلة الحسابية عن القياس الفلكي." data-en="Separate computational Qibla from astronomical measurement.">فصل القبلة الحسابية عن القياس الفلكي.</p></div>
+        <div class="step glass reveal"><b>02</b><h3>Geometry</h3><p data-ar="نمذجة الكاميرا والمتجهات والإحداثيات." data-en="Model camera, vectors and coordinate frames.">نمذجة الكاميرا والمتجهات والإحداثيات.</p></div>
+        <div class="step glass reveal"><b>03</b><h3>Solver</h3><p data-ar="حل وضع الكاميرا من الجرم والجاذبية." data-en="Solve camera pose from celestial observation and gravity.">حل وضع الكاميرا من الجرم والجاذبية.</p></div>
+        <div class="step glass reveal"><b>04</b><h3>Quality</h3><p data-ar="بناء بوابات قبول ورفض مستقلة." data-en="Build independent acceptance and rejection gates.">بناء بوابات قبول ورفض مستقلة.</p></div>
+        <div class="step glass reveal"><b>05</b><h3>Field Validation</h3><p data-ar="اختبارات ميدانية متعددة الأجهزة." data-en="Multi-device field validation.">اختبارات ميدانية متعددة الأجهزة.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="privacy">
+    <div class="container privacy">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-ar="الخصوصية" data-en="Privacy">الخصوصية</span>
+        <h2 data-ar="المعالجة على جهازك." data-en="Processing stays on your device.">المعالجة على جهازك.</h2>
+        <p data-ar="تُستخدم الكاميرا للرصد المباشر، وتُجرى الحسابات محليًا داخل التطبيق. لا حاجة لرفع صور الرصد إلى خادم."
+           data-en="The camera is used for live observation and calculations are performed locally inside the app. Observation images do not need to be uploaded to a server.">
+          تُستخدم الكاميرا للرصد المباشر، وتُجرى الحسابات محليًا داخل التطبيق. لا حاجة لرفع صور الرصد إلى خادم.
+        </p>
+      </div>
+      <div class="shield reveal">⌾</div>
+    </div>
+  </section>
+
+  <section class="section" id="download">
+    <div class="container">
+      <div class="card glass reveal" style="padding:42px;text-align:center">
+        <span class="eyebrow">QIBLA LABS</span>
+        <h2 data-ar="انظر إلى السماء… وستجد طريقك." data-en="Look to the sky… and you will find your way.">انظر إلى السماء… وستجد طريقك.</h2>
+        <p data-ar="QiblaAstro — منصة تعليمية وتقنية لفهم اتجاه القبلة والتحقق منه فلكيًا." data-en="QiblaAstro — an educational and engineering platform for understanding and astronomically verifying the Qibla.">QiblaAstro — منصة تعليمية وتقنية لفهم اتجاه القبلة والتحقق منه فلكيًا.</p>
+        <div class="cta" style="justify-content:center"><a class="btn primary" href="#">تشغيل التطبيق</a><a class="btn" href="#">التوثيق العلمي</a></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div><div class="brand"><span class="brand-mark">Q</span><span>QIBLA LABS<small>ASTRONOMICAL NAVIGATION</small></span></div><p style="color:var(--muted);max-width:420px">Scientific accuracy. Privacy by design. Trust before everything.</p></div>
+        <div><h4>Technology</h4><a href="#technology">Astronomical Solver</a><a href="#quality">Quality Gates</a><a href="#how">How It Works</a></div>
+        <div><h4>Product</h4><a href="#product">QiblaAstro</a><a href="#download">Download</a><a href="#privacy">Privacy</a></div>
+        <div><h4>Company</h4><a href="#research">Research</a><a href="#">About</a><a href="#">Contact</a></div>
+      </div>
+      <div class="copyright">
+        <span>© 2026 Mohamed SG Behairy — All Rights Reserved.</span>
+        <span>محمد سيد جبر بحيرى</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const c=document.getElementById('stars'),ctx=c.getContext('2d');let stars=[];
+    function resize(){c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);stars=Array.from({length:Math.min(900,Math.floor(innerWidth*.8))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.35+.15,a:Math.random()*.8+.2,v:Math.random()*.06+.01}))}
+    function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const s of stars){s.y+=s.v;if(s.y>innerHeight)s.y=0;ctx.globalAlpha=s.a*(.65+.35*Math.sin(Date.now()/800+s.x));ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill()}requestAnimationFrame(draw)}
+    addEventListener('resize',resize);resize();draw();
+    const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    let isEn=false;const langBtn=document.getElementById('langBtn');
+    langBtn.addEventListener('click',()=>{isEn=!isEn;document.body.classList.toggle('en',isEn);document.documentElement.dir=isEn?'ltr':'rtl';document.documentElement.lang=isEn?'en':'ar';langBtn.textContent=isEn?'AR':'EN';document.querySelectorAll('[data-ar][data-en]').forEach(el=>el.textContent=isEn?el.dataset.en:el.dataset.ar)});
+  </script>
+</body>
+</html>
