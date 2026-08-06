@@ -1,0 +1,1 @@
+Trigger the existing GitHub Actions workflows that apply the cinematic splash and the prayer, adhan, and adhkar sections to index.html.
