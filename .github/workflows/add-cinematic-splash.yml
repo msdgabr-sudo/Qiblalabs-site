@@ -1,0 +1,116 @@
+name: Add Qibla Labs cinematic splash
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qiblalabs-site-page-patches
+  cancel-in-progress: false
+
+jobs:
+  update-page:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Add cinematic splash and brand signature
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+          marker = 'id="ql-splash"'
+          if marker in html:
+              print('Splash already present; nothing to do.')
+              raise SystemExit(0)
+
+          css = r'''
+/* Qibla Labs cinematic splash */
+#ql-splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:hidden;background:#010309;color:#fff;transition:opacity 1s ease,visibility 1s ease}
+#ql-splash.ql-hide{opacity:0;visibility:hidden;pointer-events:none}
+#ql-galaxy{position:absolute;inset:0;width:100%;height:100%;display:block;background:radial-gradient(circle at 50% 45%,#102948 0,#050b18 38%,#010309 78%)}
+.ql-nebula{position:absolute;inset:-18%;background:radial-gradient(ellipse at 42% 46%,#3f7fff35 0,transparent 34%),radial-gradient(ellipse at 60% 52%,#d8ad4230 0,transparent 28%),radial-gradient(ellipse at 50% 50%,transparent 0 23%,#10284d26 44%,transparent 68%);filter:blur(20px);animation:qlNebula 10s ease-in-out infinite alternate;will-change:transform,opacity}
+.ql-splash-core{position:relative;z-index:3;width:min(640px,88vw);text-align:center;display:grid;place-items:center;transform:translateY(10px);animation:qlCoreIn 1.4s cubic-bezier(.2,.8,.2,1) both}
+.ql-orbit-stage{position:relative;width:min(430px,76vw);aspect-ratio:1;display:grid;place-items:center}
+.ql-orbit,.ql-orbit:before,.ql-orbit:after{position:absolute;inset:7%;border:1px solid #d8ad4275;border-radius:50%;content:"";box-shadow:0 0 24px #d8ad421d;animation:qlSpin 15s linear infinite}
+.ql-orbit:before{inset:14%;border-color:#62ddff62;animation-duration:11s;animation-direction:reverse;transform:rotateX(67deg) rotateZ(18deg)}
+.ql-orbit:after{inset:22%;border-color:#f6df8f55;animation-duration:8s;transform:rotateY(66deg) rotateZ(-24deg)}
+.ql-splash-logo{width:66%;filter:drop-shadow(0 0 24px #d8ad4280) drop-shadow(0 0 70px #62ddff30);animation:qlLogoPulse 3.4s ease-in-out infinite}
+.ql-brand-name{margin-top:16px;font-size:clamp(1.55rem,4vw,2.85rem);font-weight:900;letter-spacing:.22em;color:#f7e7a9;text-shadow:0 0 24px #d8ad4266}
+.ql-signature{margin-top:8px;font-size:clamp(.72rem,1.8vw,1rem);font-weight:800;letter-spacing:.42em;color:#d7e6fb;white-space:nowrap;text-shadow:0 0 16px #62ddff45}
+.ql-line{width:min(360px,70vw);height:1px;margin:20px auto 0;background:linear-gradient(90deg,transparent,#d8ad42,#62ddff,transparent);box-shadow:0 0 18px #d8ad4266;animation:qlLine 2.4s ease-in-out infinite}
+.ql-enter{margin-top:20px;border:1px solid #ffffff2b;background:#02050ba8;color:#fff;border-radius:999px;padding:9px 18px;font-weight:800;backdrop-filter:blur(10px);cursor:pointer;opacity:.76;transition:.25s opacity,.25s transform}.ql-enter:hover{opacity:1;transform:translateY(-2px)}
+.brand-copy{display:flex;flex-direction:column;line-height:1.15}.brand-tagline{font-size:.52rem;letter-spacing:.16em;color:#d8ad42;margin-top:4px;white-space:nowrap}
+@keyframes qlSpin{to{transform:rotate(360deg)}}@keyframes qlNebula{to{transform:scale(1.08) rotate(3deg);opacity:.82}}@keyframes qlCoreIn{from{opacity:0;transform:translateY(34px) scale(.94)}to{opacity:1;transform:translateY(10px) scale(1)}}@keyframes qlLogoPulse{50%{transform:scale(1.035);filter:drop-shadow(0 0 40px #d8ad42aa) drop-shadow(0 0 90px #62ddff42)}}@keyframes qlLine{50%{opacity:.35;transform:scaleX(.82)}}
+@media(max-width:620px){.ql-brand-name{letter-spacing:.13em}.ql-signature{letter-spacing:.2em}.brand-tagline{font-size:.45rem;letter-spacing:.09em}}
+@media(prefers-reduced-motion:reduce){.ql-nebula,.ql-orbit,.ql-orbit:before,.ql-orbit:after,.ql-splash-logo,.ql-line{animation:none!important}}
+'''
+
+          splash = r'''
+<div id="ql-splash" role="dialog" aria-label="Qibla Labs opening" aria-modal="true">
+  <canvas id="ql-galaxy" aria-hidden="true"></canvas>
+  <div class="ql-nebula" aria-hidden="true"></div>
+  <div class="ql-splash-core">
+    <div class="ql-orbit-stage">
+      <div class="ql-orbit" aria-hidden="true"></div>
+      <svg class="ql-splash-logo" viewBox="0 0 1000 1000" aria-label="Qibla Labs"><use href="#qibla-logo"/></svg>
+    </div>
+    <div class="ql-brand-name">QIBLA LABS</div>
+    <div class="ql-signature">CELESTIAL • ELITE • ELEGANCE</div>
+    <div class="ql-line" aria-hidden="true"></div>
+    <button class="ql-enter" id="ql-enter" type="button">الدخول إلى التجربة</button>
+  </div>
+</div>
+'''
+
+          script = r'''
+<script>
+(function(){
+  const splash=document.getElementById('ql-splash');
+  if(!splash)return;
+  const KEY='qlSplashSeenAt',DAY=86400000,now=Date.now();
+  const last=Number(localStorage.getItem(KEY)||0);
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const close=()=>{localStorage.setItem(KEY,String(Date.now()));splash.classList.add('ql-hide');setTimeout(()=>splash.remove(),1100)};
+  document.getElementById('ql-enter')?.addEventListener('click',close);
+  if(last&&now-last<DAY){splash.remove();return}
+  const canvas=document.getElementById('ql-galaxy'),ctx=canvas?.getContext('2d');
+  if(ctx&&!reduce){
+    let stars=[],raf=0,w=0,h=0,dpr=Math.min(devicePixelRatio||1,1.6);
+    const resize=()=>{w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:Math.min(240,Math.floor(w*h/5200))},()=>({x:Math.random()*w,y:Math.random()*h,z:.25+Math.random()*.75,r:.35+Math.random()*1.25,a:.25+Math.random()*.7,p:Math.random()*Math.PI*2}))};
+    const draw=t=>{ctx.clearRect(0,0,w,h);const cx=w/2,cy=h/2;for(const s of stars){s.p+=.006*s.z;const dx=s.x-cx,dy=s.y-cy,ang=.00008*t*s.z,ca=Math.cos(ang),sa=Math.sin(ang);const x=cx+dx*ca-dy*sa,y=cy+dx*sa+dy*ca;const tw=.55+.45*Math.sin(s.p+t*.0015);ctx.beginPath();ctx.fillStyle=`rgba(${s.z>.68?'246,223,143':'190,225,255'},${s.a*tw})`;ctx.arc(x,y,s.r*s.z,0,Math.PI*2);ctx.fill()}raf=requestAnimationFrame(draw)};
+    addEventListener('resize',resize,{passive:true});resize();raf=requestAnimationFrame(draw);setTimeout(()=>cancelAnimationFrame(raf),5200);
+  }
+  setTimeout(close,reduce?1800:4800);
+})();
+</script>
+'''
+
+          html = html.replace('</style>', css + '\n</style>', 1)
+          html = html.replace('<body>', '<body>\n' + splash, 1)
+          html = html.replace('</body>', script + '\n</body>', 1)
+          html = html.replace('<span>QIBLA LABS</span>', '<span class="brand-copy"><span>QIBLA LABS</span><small class="brand-tagline">CELESTIAL • ELITE • ELEGANCE</small></span>', 1)
+          path.write_text(html,encoding='utf-8')
+          PY
+      - name: Commit page update
+        shell: bash
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Add cinematic Qibla Labs galaxy splash"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
