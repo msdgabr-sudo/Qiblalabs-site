@@ -7,22 +7,23 @@
 <title>QiblaAstro Ultimate — ميزان الكعبة | Qibla Labs</title>
 <meta name="description" content="QiblaAstro Ultimate من Qibla Labs: القبلة الحسابية والتحقق الفلكي ومواقيت الصلاة والأذان والأذكار والقرآن الكريم.">
 <link rel="canonical" href="https://qiblalabs.com/">
-<link rel="icon" type="image/png" href="/images/logo.png?v=final2">
-<link rel="apple-touch-icon" href="/images/logo.png?v=final2">
+<link rel="icon" type="image/png" href="/images/logo.png?v=20260806-final">
+<link rel="apple-touch-icon" href="/images/logo.png?v=20260806-final">
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Qibla Labs">
 <meta property="og:locale" content="ar_AR">
 <meta property="og:url" content="https://qiblalabs.com/">
 <meta property="og:title" content="QiblaAstro Ultimate — ميزان الكعبة">
 <meta property="og:description" content="القبلة الفلكية ومواقيت الصلاة والأذان والأذكار والقرآن الكريم في تجربة واحدة.">
-<meta property="og:image" content="https://qiblalabs.com/images/logo.png?v=final2">
-<meta property="og:image:secure_url" content="https://qiblalabs.com/images/logo.png?v=final2">
+<meta property="og:image" content="https://qiblalabs.com/images/logo.png?v=20260806-final">
+<meta property="og:image:secure_url" content="https://qiblalabs.com/images/logo.png?v=20260806-final">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:alt" content="Qibla Labs logo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="QiblaAstro Ultimate — ميزان الكعبة">
 <meta name="twitter:description" content="منصة إسلامية متكاملة من Qibla Labs.">
-<meta name="twitter:image" content="https://qiblalabs.com/images/logo.png?v=final2">
+<meta name="twitter:image" content="https://qiblalabs.com/images/logo.png?v=20260806-final">
 <style>
 :root{--gold:#d8ad42;--gold2:#ffe89a;--cyan:#62ddff;--text:#f8fbff;--muted:#b4c0d1;--line:#ffffff22;--w:min(1160px,calc(100% - 28px))}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8;background:radial-gradient(circle at 50% 0,#173d69 0,transparent 27%),linear-gradient(180deg,#02050b,#071426 52%,#02050b);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-2;background-image:radial-gradient(#fff .8px,transparent 1.2px),radial-gradient(#62ddff .6px,transparent 1px);background-size:39px 39px,83px 83px;opacity:.14}.wrap{width:var(--w);margin:auto}a{text-decoration:none;color:inherit}.glass{background:linear-gradient(155deg,#ffffff16,#ffffff08);border:1px solid var(--line);box-shadow:0 28px 90px #0009;backdrop-filter:blur(16px)}
 .nav{position:fixed;z-index:90;top:12px;left:50%;transform:translateX(-50%);width:var(--w);padding:9px 13px;border-radius:24px;background:#02050bef;border:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px}.brand img{width:60px;height:60px;object-fit:contain;border-radius:17px;background:#05080e;box-shadow:0 0 28px #d8ad4266}.brand-copy{display:flex;flex-direction:column;line-height:1.15}.brand-copy strong{font-size:1rem}.brand-copy small{font-size:.48rem;letter-spacing:.11em;color:var(--gold);white-space:nowrap}.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 20px;border-radius:999px;border:1px solid var(--line);font-weight:900;background:#ffffff0d}.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#160e02;border:0}
@@ -35,22 +36,58 @@ section{padding:86px 0}.head{max-width:820px;margin:0 auto 32px;text-align:cente
 .splash-logo,.final-logo{object-fit:contain;display:block;color:transparent}
 .splash-logo,.final-logo{object-fit:contain;display:block;color:transparent}
 .splash-logo,.final-logo{object-fit:contain;display:block;color:transparent}
+
+/* FINAL AUDIT OVERRIDES */
+#splash{display:grid!important;opacity:1;visibility:visible;pointer-events:auto;position:fixed;inset:0;z-index:99999;overflow:hidden;background:radial-gradient(circle at 50% 45%,#1b4d84 0,#07101e 40%,#010309 82%)}
+#splash.hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .9s ease,visibility .9s ease}
+#splash .galaxy{display:block!important;position:absolute;inset:-16%;background:radial-gradient(ellipse at 38% 45%,#3677ff45 0,transparent 30%),radial-gradient(ellipse at 64% 52%,#d8ad4242 0,transparent 28%),conic-gradient(from 25deg at 50% 50%,transparent,#244f8d44,transparent,#d8ad4233,transparent);filter:blur(18px);animation:galaxy 9s ease-in-out infinite alternate}
+#splash .stars{display:block!important;position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#62ddff .8px,transparent 1.2px),radial-gradient(#f6df8f .7px,transparent 1.1px);background-size:43px 43px,79px 79px,113px 113px;animation:drift 18s linear infinite}
+.splash-logo,.mini-logo,.hero-logo,.final-logo{display:block!important;object-fit:contain!important;color:transparent!important}
+.mini-logo{min-width:56px!important;min-height:56px!important}
+.brand-tagline,.splash-tag,.signature{display:block!important}
+.video-main,.video-bg{display:block!important}
+.video-main{z-index:2!important;object-fit:contain!important;background:#000}
+@media(max-width:620px){.brand-tagline{font-size:.42rem!important;letter-spacing:.07em!important}.splash-tag,.signature{letter-spacing:.14em!important}}
+
 </style>
 <link rel="stylesheet" href="assets/site-fixes.css?v=20260806-2">
 </head>
 <body>
-<div id="splash"><div class="galaxy"></div><div class="stars"></div><div class="splash-core"><div class="orbit"><img class="splash-logo" src="images/logo.png?v=2" alt="Qibla Labs"></div><div class="splash-title">QIBLA LABS</div><div class="splash-tag">CELESTIAL • ELITE • ELEGANCE</div><button class="enter" id="enterBtn">الدخول إلى التجربة</button></div></div>
-<nav class="nav"><a class="brand" href="#top"><img src="/images/logo.png?v=final2" alt="Qibla Labs"><span class="brand-copy"><strong>QIBLA LABS</strong><small>CELESTIAL • ELITE • ELEGANCE</small></span></a><a class="btn primary" href="https://msdgabr-sudo.github.io/qibla-astro/">تشغيل التطبيق</a></nav>
+<div id="splash"><div class="galaxy"></div><div class="stars"></div><div class="splash-core"><div class="orbit"><img class="splash-logo" src="/images/logo.png?v=20260806-final" alt="Qibla Labs"></div><div class="splash-title">QIBLA LABS</div><div class="splash-tag">CELESTIAL • ELITE • ELEGANCE</div><button class="enter" id="enterBtn">الدخول إلى التجربة</button></div></div>
+<nav class="nav"><a class="brand" href="#top"><img src="/images/logo.png?v=20260806-final" alt="Qibla Labs"><span class="brand-copy"><strong>QIBLA LABS</strong><small>CELESTIAL • ELITE • ELEGANCE</small></span></a><a class="btn primary" href="https://msdgabr-sudo.github.io/qibla-astro/">تشغيل التطبيق</a></nav>
 <main id="top">
-<section class="hero"><div class="wrap hero-grid"><div class="copy"><span class="eyebrow">THE SKY KNOWS THE WAY</span><h1>QIBLAASTRO<br>ULTIMATE</h1><div class="arabic">مِيزَانُ الْكَعْبَةِ</div><div class="by">BY QIBLA LABS</div><p>منصة للقبلة الحسابية الرقمية باستخدام GNSS، مع نظام مستقل للتحقق الفلكي بالشمس أو القمر وهندسة الكاميرا.</p><a class="btn primary" href="#features">استكشف التقنية</a></div><div class="stage glass"><img class="hero-logo" src="/images/logo.png?v=final2" alt="QiblaAstro"><div class="earth"></div></div></div></section>
+<section class="hero"><div class="wrap hero-grid"><div class="copy"><span class="eyebrow">THE SKY KNOWS THE WAY</span><h1>QIBLAASTRO<br>ULTIMATE</h1><div class="arabic">مِيزَانُ الْكَعْبَةِ</div><div class="by">BY QIBLA LABS</div><p>منصة للقبلة الحسابية الرقمية باستخدام GNSS، مع نظام مستقل للتحقق الفلكي بالشمس أو القمر وهندسة الكاميرا.</p><a class="btn primary" href="#features">استكشف التقنية</a></div><div class="stage glass"><img class="hero-logo" src="/images/logo.png?v=20260806-final" alt="QiblaAstro"><div class="earth"></div></div></div></section>
 <section id="features"><div class="wrap"><div class="head"><span class="eyebrow">TWO INDEPENDENT SYSTEMS</span><h2>دقة حسابية… وتحقق فلكي مستقل.</h2></div><div class="grid g2"><article class="card glass"><div class="icon">🛰️</div><h3>القبلة الحسابية</h3><p>حساب اتجاه القبلة الحقيقي اعتمادًا على الإحداثيات الجغرافية والوقت.</p></article><article class="card glass"><div class="icon">☀️🌙</div><h3>التحقق الفلكي</h3><p>مقارنة اتجاه الهاتف بهدف سماوي موثوق عبر الشمس أو القمر.</p></article></div></div></section>
-<section class="promo"><div class="wrap"><div class="head"><span class="eyebrow">QIBLAASTRO FILM</span><h2>من السماء… إلى أدق اتجاه.</h2><p>فيديو تعريفي يوضح رؤية التطبيق وتظهر ترجمته العربية داخل الإطار.</p></div><div class="cinema" id="cinema"><video class="video-bg" id="videoBg" src="/videos/hero-video.mp4?v=final2" muted loop playsinline preload="metadata"></video><video class="video-main" id="heroVideo" src="/videos/hero-video.mp4?v=final2" autoplay muted loop playsinline preload="auto"></video><button class="sound" id="soundBtn">🔊 تشغيل الصوت</button><div class="caption" id="caption">اتبع السماء… تجد وجهتك.</div><div class="video-error" id="videoError">تعذر تحميل الفيديو.</div></div></div></section>
+<section class="promo"><div class="wrap"><div class="head"><span class="eyebrow">QIBLAASTRO FILM</span><h2>من السماء… إلى أدق اتجاه.</h2><p>فيديو تعريفي يوضح رؤية التطبيق وتظهر ترجمته العربية داخل الإطار.</p></div><div class="cinema" id="cinema"><video class="video-bg" id="videoBg" src="/videos/hero-video.mp4?v=20260806-final" muted loop playsinline preload="metadata"></video><video class="video-main" id="heroVideo" src="/videos/hero-video.mp4?v=20260806-final" autoplay muted loop playsinline preload="auto"></video><button class="sound" id="soundBtn">🔊 تشغيل الصوت</button><div class="caption" id="caption">اتبع السماء… تجد وجهتك.</div><div class="video-error" id="videoError">تعذر تحميل الفيديو.</div></div></div></section>
 <section class="quran"><div class="wrap"><div class="head"><span class="eyebrow">THE HOLY QURAN</span><h2>القرآن الكريم</h2></div><div class="quranbox glass"><div class="ayah">﴿ قَدْ نَرَىٰ تَقَلُّبَ وَجْهِكَ فِي السَّمَاءِ فَلَنُوَلِّيَنَّكَ قِبْلَةً تَرْضَاهَا فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ ﴾</div></div></div></section>
 <section class="faith"><div class="wrap"><div class="head"><span class="eyebrow">A COMPLETE ISLAMIC EXPERIENCE</span><h2>يومك الإيماني… في تجربة واحدة.</h2><p>مواقيت الصلاة والأذان والأذكار اليومية بتصميم واضح ومريح.</p></div><div class="prayer"><div class="prayer-top"><div class="next"><span>الصلاة القادمة</span><strong>صلاة الفجر</strong><span>وفق موقعك وإعدادات الحساب</span></div><div class="clock">04:38</div></div><div class="times"><div class="time active"><b>الفجر</b><span>04:38</span></div><div class="time"><b>الشروق</b><span>06:09</span></div><div class="time"><b>الظهر</b><span>12:01</span></div><div class="time"><b>العصر</b><span>15:24</span></div><div class="time"><b>المغرب</b><span>17:54</span></div><div class="time"><b>العشاء</b><span>19:15</span></div></div></div><div class="adhan"><article class="adhan-card"><span class="eyebrow">PRAYER CALL</span><h3>الأذان… في وقته.</h3><p>تنبيه واضح عند دخول وقت الصلاة مع تحكم كامل في إعدادات الصوت والتنبيه.</p></article><div class="adhan-visual">🕌</div></div><div class="dhikr-grid"><article class="dhikr morning"><span>☀️</span><h3>أذكار الصباح</h3><p>بداية مطمئنة ليومك.</p></article><article class="dhikr evening"><span>🌙</span><h3>أذكار المساء</h3><p>ختام هادئ لليوم.</p></article><article class="dhikr after"><span>🤲</span><h3>بعد الصلاة</h3><p>الأذكار المأثورة في وقتها.</p></article><article class="dhikr sleep"><span>✨</span><h3>قبل النوم</h3><p>تجربة ليلية مريحة.</p></article></div></div></section>
-<section class="finale"><div class="wrap"><img src="/images/logo.png?v=final2" alt="Qibla Labs"><h2>QIBLA LABS</h2><div class="signature">CELESTIAL • ELITE • ELEGANCE</div></div></section>
+<section class="finale"><div class="wrap"><img src="/images/logo.png?v=20260806-final" alt="Qibla Labs"><h2>QIBLA LABS</h2><div class="signature">CELESTIAL • ELITE • ELEGANCE</div></div></section>
 </main><footer class="footer">© 2026 Mohamed SG Behairy — All Rights Reserved.</footer>
 <script>
-(function(){const splash=document.getElementById('splash');const close=()=>{splash.classList.add('hide');setTimeout(()=>splash.remove(),950)};document.getElementById('enterBtn').onclick=close;setTimeout(close,5000);document.querySelectorAll('img').forEach(i=>i.onerror=()=>{i.src='/images/logo.png?v=final2'});const main=document.getElementById('heroVideo'),bg=document.getElementById('videoBg'),sound=document.getElementById('soundBtn'),err=document.getElementById('videoError'),cap=document.getElementById('caption');const play=()=>{main.play().catch(()=>{});bg.play().catch(()=>{})};main.addEventListener('canplay',play,{once:true});main.addEventListener('loadedmetadata',play,{once:true});main.addEventListener('error',()=>err.style.display='grid');window.addEventListener('load',play,{once:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)play()});sound.onclick=()=>{main.muted=!main.muted;sound.textContent=main.muted?'🔊 تشغيل الصوت':'🔇 كتم الصوت';play()};const lines=[['اتبع السماء… تجد وجهتك.',0],['من الحساب الفلكي إلى التحقق البصري.',5],['دقة هندسية وثقة قابلة للتحقق.',10],['QiblaAstro Ultimate — ميزان الكعبة.',16]];main.ontimeupdate=()=>{let t=lines[0][0];for(const x of lines)if(main.currentTime>=x[1])t=x[0];cap.textContent=t};new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?play():(main.pause(),bg.pause())),{threshold:.1}).observe(document.getElementById('cinema'))})();
+(function(){const splash=document.getElementById('splash');const close=()=>{splash.classList.add('hide');setTimeout(()=>splash.remove(),950)};document.getElementById('enterBtn').onclick=close;setTimeout(close,5000);document.querySelectorAll('img').forEach(i=>i.onerror=()=>{i.src='/images/logo.png?v=20260806-final'});const main=document.getElementById('heroVideo'),bg=document.getElementById('videoBg'),sound=document.getElementById('soundBtn'),err=document.getElementById('videoError'),cap=document.getElementById('caption');const play=()=>{main.play().catch(()=>{});bg.play().catch(()=>{})};main.addEventListener('canplay',play,{once:true});main.addEventListener('loadedmetadata',play,{once:true});main.addEventListener('error',()=>err.style.display='grid');window.addEventListener('load',play,{once:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)play()});sound.onclick=()=>{main.muted=!main.muted;sound.textContent=main.muted?'🔊 تشغيل الصوت':'🔇 كتم الصوت';play()};const lines=[['اتبع السماء… تجد وجهتك.',0],['من الحساب الفلكي إلى التحقق البصري.',5],['دقة هندسية وثقة قابلة للتحقق.',10],['QiblaAstro Ultimate — ميزان الكعبة.',16]];main.ontimeupdate=()=>{let t=lines[0][0];for(const x of lines)if(main.currentTime>=x[1])t=x[0];cap.textContent=t};new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?play():(main.pause(),bg.pause())),{threshold:.1}).observe(document.getElementById('cinema'))})();
+</script>
+
+<script id="final-site-controller">
+(function(){
+  const splash=document.getElementById('splash');
+  const closeSplash=()=>{if(!splash)return;splash.classList.add('hide');setTimeout(()=>splash.remove(),1000)};
+  document.getElementById('enterBtn')?.addEventListener('click',closeSplash);
+  setTimeout(closeSplash,5200);
+
+  document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',()=>{img.src='/images/logo.png?v=20260806-final';},{once:true})});
+
+  const main=document.getElementById('heroVideo')||document.querySelector('.video-main');
+  const bg=document.getElementById('videoBg')||document.querySelector('.video-bg');
+  const sound=document.getElementById('soundBtn');
+  const tryPlay=()=>{main?.play().catch(()=>{});bg?.play().catch(()=>{})};
+  if(main){main.muted=true;main.autoplay=true;main.loop=true;main.playsInline=true;main.preload='auto';main.addEventListener('canplay',tryPlay,{once:true});main.addEventListener('loadedmetadata',tryPlay,{once:true});}
+  if(bg){bg.muted=true;bg.loop=true;bg.playsInline=true;}
+  window.addEventListener('load',tryPlay,{once:true});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryPlay()});
+  sound?.addEventListener('click',()=>{if(!main)return;main.muted=!main.muted;sound.textContent=main.muted?'🔊 تشغيل الصوت':'🔇 كتم الصوت';tryPlay()});
+  const target=document.querySelector('.cinema');
+  if(target&&'IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?tryPlay():(main?.pause(),bg?.pause())),{threshold:.1}).observe(target)}
+})();
 </script>
 <script src="assets/site-fixes.js?v=20260806-2" defer></script>
 </body>
