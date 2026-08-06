@@ -1,0 +1,75 @@
+name: Final Qibla Labs site audit
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qiblalabs-final-audit
+  cancel-in-progress: true
+
+jobs:
+  audit-and-repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Wait for legacy workflows
+        run: sleep 20
+      - name: Audit assets and repair index
+        shell: bash
+        run: |
+          set -e
+          test -f CNAME
+          test -f images/logo.png
+          test -f videos/hero-video.mp4
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+
+          # Canonical local assets, cache-busted and root-relative.
+          s=re.sub(r'(?:https?://[^"\']+)?/?images/logo\.png(?:\?v=[^"\']*)?', '/images/logo.png?v=20260806-final', s)
+          s=re.sub(r'(?:https?://[^"\']+)?/?videos/hero-video\.mp4(?:\?v=[^"\']*)?', '/videos/hero-video.mp4?v=20260806-final', s)
+
+          # Complete social preview metadata.
+          og='''\n<meta property="og:type" content="website">\n<meta property="og:site_name" content="Qibla Labs">\n<meta property="og:locale" content="ar_AR">\n<meta property="og:url" content="https://qiblalabs.com/">\n<meta property="og:title" content="QiblaAstro Ultimate — ميزان الكعبة">\n<meta property="og:description" content="القبلة الفلكية ومواقيت الصلاة والأذان والأذكار والقرآن الكريم في تجربة واحدة.">\n<meta property="og:image" content="https://qiblalabs.com/images/logo.png?v=20260806-final">\n<meta property="og:image:secure_url" content="https://qiblalabs.com/images/logo.png?v=20260806-final">\n<meta property="og:image:type" content="image/png">\n<meta property="og:image:alt" content="Qibla Labs logo">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="QiblaAstro Ultimate — ميزان الكعبة">\n<meta name="twitter:description" content="منصة إسلامية متكاملة من Qibla Labs.">\n<meta name="twitter:image" content="https://qiblalabs.com/images/logo.png?v=20260806-final">\n'''
+          s=re.sub(r'\s*<meta property="og:[\s\S]*?(?=<style>|</head>)','\n',s, count=1)
+          if '<meta property="og:type"' not in s:
+              s=s.replace('<style>',og+'<style>',1)
+
+          repair_css='''\n/* FINAL AUDIT OVERRIDES */\n#splash{display:grid!important;opacity:1;visibility:visible;pointer-events:auto;position:fixed;inset:0;z-index:99999;overflow:hidden;background:radial-gradient(circle at 50% 45%,#1b4d84 0,#07101e 40%,#010309 82%)}\n#splash.hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .9s ease,visibility .9s ease}\n#splash .galaxy{display:block!important;position:absolute;inset:-16%;background:radial-gradient(ellipse at 38% 45%,#3677ff45 0,transparent 30%),radial-gradient(ellipse at 64% 52%,#d8ad4242 0,transparent 28%),conic-gradient(from 25deg at 50% 50%,transparent,#244f8d44,transparent,#d8ad4233,transparent);filter:blur(18px);animation:galaxy 9s ease-in-out infinite alternate}\n#splash .stars{display:block!important;position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#62ddff .8px,transparent 1.2px),radial-gradient(#f6df8f .7px,transparent 1.1px);background-size:43px 43px,79px 79px,113px 113px;animation:drift 18s linear infinite}\n.splash-logo,.mini-logo,.hero-logo,.final-logo{display:block!important;object-fit:contain!important;color:transparent!important}\n.mini-logo{min-width:56px!important;min-height:56px!important}\n.brand-tagline,.splash-tag,.signature{display:block!important}\n.video-main,.video-bg{display:block!important}\n.video-main{z-index:2!important;object-fit:contain!important;background:#000}\n@media(max-width:620px){.brand-tagline{font-size:.42rem!important;letter-spacing:.07em!important}.splash-tag,.signature{letter-spacing:.14em!important}}\n'''
+          s=s.replace('</style>',repair_css+'\n</style>',1)
+
+          # Normalize video attributes.
+          s=re.sub(r'<video([^>]*class="video-main"[^>]*)>',lambda m:'<video'+m.group(1)+' autoplay muted loop playsinline preload="auto">' if 'autoplay' not in m.group(1) else '<video'+m.group(1)+'>',s)
+
+          # Remove old final runtime block if present, then add one reliable controller.
+          s=re.sub(r'<script id="final-site-controller">[\s\S]*?</script>','',s)
+          js='''\n<script id="final-site-controller">\n(function(){\n  const splash=document.getElementById('splash');\n  const closeSplash=()=>{if(!splash)return;splash.classList.add('hide');setTimeout(()=>splash.remove(),1000)};\n  document.getElementById('enterBtn')?.addEventListener('click',closeSplash);\n  setTimeout(closeSplash,5200);\n\n  document.querySelectorAll('img').forEach(img=>{img.addEventListener('error',()=>{img.src='/images/logo.png?v=20260806-final';},{once:true})});\n\n  const main=document.getElementById('heroVideo')||document.querySelector('.video-main');\n  const bg=document.getElementById('videoBg')||document.querySelector('.video-bg');\n  const sound=document.getElementById('soundBtn');\n  const tryPlay=()=>{main?.play().catch(()=>{});bg?.play().catch(()=>{})};\n  if(main){main.muted=true;main.autoplay=true;main.loop=true;main.playsInline=true;main.preload='auto';main.addEventListener('canplay',tryPlay,{once:true});main.addEventListener('loadedmetadata',tryPlay,{once:true});}\n  if(bg){bg.muted=true;bg.loop=true;bg.playsInline=true;}\n  window.addEventListener('load',tryPlay,{once:true});\n  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryPlay()});\n  sound?.addEventListener('click',()=>{if(!main)return;main.muted=!main.muted;sound.textContent=main.muted?'🔊 تشغيل الصوت':'🔇 كتم الصوت';tryPlay()});\n  const target=document.querySelector('.cinema');\n  if(target&&'IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?tryPlay():(main?.pause(),bg?.pause())),{threshold:.1}).observe(target)}\n})();\n</script>\n'''
+          s=s.replace('</body>',js+'</body>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate HTML references
+        run: |
+          grep -q '/images/logo.png?v=20260806-final' index.html
+          grep -q '/videos/hero-video.mp4?v=20260806-final' index.html
+          grep -q 'CELESTIAL • ELITE • ELEGANCE' index.html
+          grep -q 'og:image' index.html
+      - name: Commit repaired site
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Complete site audit and repair all asset links"
+          git pull --rebase origin main
+          git push origin HEAD:main
