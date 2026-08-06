@@ -36,7 +36,29 @@
     const video = document.getElementById('heroVideo');
     const background = document.getElementById('videoBg');
     const cinema = video?.closest('.cinema');
+    const caption = document.getElementById('caption');
     if (!video || !cinema) return;
+
+    const subtitles = [
+      { start: 0, end: 4.5, text: 'منذ القدم، اهتدى الناس بالسماء والنجوم.' },
+      { start: 4.5, end: 9, text: 'لكن تحديد الاتجاه وحده لا يكفي.' },
+      { start: 9, end: 13.5, text: 'فالدقة تحتاج إلى تحقق حقيقي.' },
+      { start: 13.5, end: 18, text: 'لهذا صُمم QiblaAstro لقياس اتجاه القبلة حسابيًا.' },
+      { start: 18, end: 23, text: 'ثم التحقق منه فلكيًا باستخدام الشمس أو القمر.' },
+      { start: 23, end: 28, text: 'تقنية تجمع بين الموقع والزمن والرصد البصري.' },
+      { start: 28, end: 33, text: 'لتمنحك اتجاهًا أوضح وثقةً أكبر.' },
+      { start: 33, end: 39, text: 'QiblaAstro Ultimate — ميزان الكعبة.' },
+      { start: 39, end: 9999, text: 'انظر إلى السماء… تجد طريقك.' }
+    ];
+
+    const updateCaption = () => {
+      if (!caption) return;
+      const t = Number.isFinite(video.currentTime) ? video.currentTime : 0;
+      const item = subtitles.find((entry) => t >= entry.start && t < entry.end) || subtitles[subtitles.length - 1];
+      caption.textContent = item.text;
+      caption.setAttribute('lang', 'ar');
+      caption.setAttribute('dir', 'rtl');
+    };
 
     document.getElementById('soundBtn')?.remove();
     cinema.querySelector('.qg-video-controls')?.remove();
@@ -88,6 +110,7 @@
       const duration = Number.isFinite(video.duration) ? video.duration : 0;
       seek.value = duration ? String(Math.round((video.currentTime / duration) * 1000)) : '0';
       time.textContent = `${formatTime(video.currentTime)} / ${formatTime(duration)}`;
+      updateCaption();
       syncBackground();
     };
 
