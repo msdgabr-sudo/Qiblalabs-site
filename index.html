@@ -36,6 +36,7 @@ section{padding:86px 0}.head{max-width:820px;margin:0 auto 32px;text-align:cente
 .splash-logo,.final-logo{object-fit:contain;display:block;color:transparent}
 .splash-logo,.final-logo{object-fit:contain;display:block;color:transparent}
 </style>
+<link rel="stylesheet" href="assets/site-fixes.css?v=20260806-2">
 </head>
 <body>
 <div id="splash"><div class="galaxy"></div><div class="stars"></div><div class="splash-core"><div class="orbit"><img class="splash-logo" src="images/logo.png?v=2" alt="Qibla Labs"></div><div class="splash-title">QIBLA LABS</div><div class="splash-tag">CELESTIAL • ELITE • ELEGANCE</div><button class="enter" id="enterBtn">الدخول إلى التجربة</button></div></div>
@@ -51,5 +52,6 @@ section{padding:86px 0}.head{max-width:820px;margin:0 auto 32px;text-align:cente
 <script>
 (function(){const splash=document.getElementById('splash');const close=()=>{splash.classList.add('hide');setTimeout(()=>splash.remove(),950)};document.getElementById('enterBtn').onclick=close;setTimeout(close,5000);document.querySelectorAll('img').forEach(i=>i.onerror=()=>{i.src='/images/logo.png?v=final2'});const main=document.getElementById('heroVideo'),bg=document.getElementById('videoBg'),sound=document.getElementById('soundBtn'),err=document.getElementById('videoError'),cap=document.getElementById('caption');const play=()=>{main.play().catch(()=>{});bg.play().catch(()=>{})};main.addEventListener('canplay',play,{once:true});main.addEventListener('loadedmetadata',play,{once:true});main.addEventListener('error',()=>err.style.display='grid');window.addEventListener('load',play,{once:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)play()});sound.onclick=()=>{main.muted=!main.muted;sound.textContent=main.muted?'🔊 تشغيل الصوت':'🔇 كتم الصوت';play()};const lines=[['اتبع السماء… تجد وجهتك.',0],['من الحساب الفلكي إلى التحقق البصري.',5],['دقة هندسية وثقة قابلة للتحقق.',10],['QiblaAstro Ultimate — ميزان الكعبة.',16]];main.ontimeupdate=()=>{let t=lines[0][0];for(const x of lines)if(main.currentTime>=x[1])t=x[0];cap.textContent=t};new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?play():(main.pause(),bg.pause())),{threshold:.1}).observe(document.getElementById('cinema'))})();
 </script>
+<script src="assets/site-fixes.js?v=20260806-2" defer></script>
 </body>
 </html>
