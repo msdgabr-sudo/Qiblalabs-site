@@ -1,0 +1,113 @@
+name: Fix Qibla Labs splash and logo placements
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-page:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch index.html
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+
+          # Use the uploaded logo everywhere instead of broken external images.
+          html = html.replace('https://msdgabr-sudo.github.io/qibla-astro/icons/icon-512x512.png', 'images/logo.png?v=5')
+          html = html.replace('https://msdgabr-sudo.github.io/qibla-astro/icons/icon-192x192.png', 'images/logo.png?v=5')
+
+          # Remove the older splash from view; the new splash below is independent and reliable.
+          css = r'''
+/* Qibla Labs splash v2 */
+#splash{display:none!important}
+#ql-brand-splash-v2{position:fixed;inset:0;z-index:10000;overflow:hidden;display:grid;place-items:center;background:#01030a;color:#fff;transition:opacity .9s ease,visibility .9s ease}
+#ql-brand-splash-v2.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.qlv2-galaxy{position:absolute;inset:-10%;background:
+radial-gradient(ellipse at 50% 48%,rgba(69,132,255,.28),transparent 28%),
+radial-gradient(ellipse at 58% 44%,rgba(216,173,66,.24),transparent 22%),
+radial-gradient(ellipse at 40% 56%,rgba(73,211,255,.18),transparent 24%),
+conic-gradient(from 0deg at 50% 50%,#02050b,#0b1b33,#050913,#2d1a06,#02050b);
+filter:saturate(1.2);animation:qlv2Galaxy 11s ease-in-out infinite alternate}
+.qlv2-stars,.qlv2-stars:before,.qlv2-stars:after{position:absolute;inset:0;content:"";background-image:radial-gradient(#fff 1px,transparent 1.5px);background-size:42px 42px;opacity:.58;animation:qlv2Stars 16s linear infinite}
+.qlv2-stars:before{background-image:radial-gradient(#62ddff .8px,transparent 1.2px);background-size:76px 76px;opacity:.55;animation-duration:22s}
+.qlv2-stars:after{background-image:radial-gradient(#f6df8f .7px,transparent 1.2px);background-size:113px 113px;opacity:.42;animation-duration:28s;animation-direction:reverse}
+.qlv2-core{position:relative;z-index:2;text-align:center;width:min(680px,90vw);display:grid;place-items:center;animation:qlv2Intro 1.35s ease both}
+.qlv2-orbit-stage{position:relative;width:min(430px,74vw);aspect-ratio:1;display:grid;place-items:center}
+.qlv2-orbit-stage:before,.qlv2-orbit-stage:after{content:"";position:absolute;inset:5%;border:1px solid rgba(246,223,143,.58);border-radius:50%;box-shadow:0 0 30px rgba(216,173,66,.16);animation:qlv2Spin 14s linear infinite}
+.qlv2-orbit-stage:after{inset:17%;border-color:rgba(98,221,255,.48);animation-direction:reverse;animation-duration:10s}
+.qlv2-logo{width:72%;max-width:320px;filter:drop-shadow(0 0 24px rgba(216,173,66,.8)) drop-shadow(0 0 80px rgba(98,221,255,.22));animation:qlv2Pulse 3.2s ease-in-out infinite}
+.qlv2-title{margin-top:12px;font-size:clamp(1.7rem,4.8vw,3rem);font-weight:900;letter-spacing:.2em;color:#f7e7a9}
+.qlv2-tag{margin-top:8px;font-size:clamp(.72rem,2vw,1rem);font-weight:800;letter-spacing:.32em;color:#dce9ff;white-space:nowrap}
+.qlv2-enter{margin-top:24px;border:1px solid rgba(255,255,255,.24);background:rgba(2,5,11,.65);color:#fff;border-radius:999px;padding:10px 19px;font-weight:800;backdrop-filter:blur(10px)}
+.brand-copy{display:flex!important;flex-direction:column!important;line-height:1.05!important}
+.brand-tagline{display:block!important;font-size:.48rem!important;letter-spacing:.12em!important;color:#d8ad42!important;margin-top:5px!important;white-space:nowrap!important}
+.mini-logo img,.mini-logo{object-fit:cover}
+@keyframes qlv2Spin{to{transform:rotate(360deg)}}
+@keyframes qlv2Galaxy{to{transform:scale(1.08) rotate(2.5deg);filter:saturate(1.35) brightness(1.08)}}
+@keyframes qlv2Stars{to{transform:translate3d(0,-26px,0) rotate(.8deg)}}
+@keyframes qlv2Intro{from{opacity:0;transform:scale(.94) translateY(22px)}to{opacity:1;transform:none}}
+@keyframes qlv2Pulse{50%{transform:scale(1.035);filter:drop-shadow(0 0 42px rgba(216,173,66,.95)) drop-shadow(0 0 100px rgba(98,221,255,.3))}}
+@media(max-width:620px){.qlv2-tag{letter-spacing:.19em}.brand-tagline{font-size:.42rem!important;letter-spacing:.08em!important}}
+@media(prefers-reduced-motion:reduce){.qlv2-galaxy,.qlv2-stars,.qlv2-stars:before,.qlv2-stars:after,.qlv2-orbit-stage:before,.qlv2-orbit-stage:after,.qlv2-logo{animation:none!important}}
+'''
+
+          splash = r'''
+<div id="ql-brand-splash-v2" role="dialog" aria-label="Qibla Labs opening" aria-modal="true">
+  <div class="qlv2-galaxy" aria-hidden="true"></div>
+  <div class="qlv2-stars" aria-hidden="true"></div>
+  <div class="qlv2-core">
+    <div class="qlv2-orbit-stage"><img class="qlv2-logo" src="images/logo.png?v=5" alt="Qibla Labs"></div>
+    <div class="qlv2-title">QIBLA LABS</div>
+    <div class="qlv2-tag">CELESTIAL • ELITE • ELEGANCE</div>
+    <button class="qlv2-enter" id="qlv2-enter" type="button">الدخول إلى التجربة</button>
+  </div>
+</div>
+'''
+
+          script = r'''
+<script>
+(function(){
+  const s=document.getElementById('ql-brand-splash-v2');
+  if(!s)return;
+  const close=()=>{s.classList.add('is-hidden');setTimeout(()=>s.remove(),950)};
+  document.getElementById('qlv2-enter')?.addEventListener('click',close);
+  setTimeout(close,5000);
+})();
+</script>
+'''
+
+          if 'id="ql-brand-splash-v2"' not in html:
+              html = html.replace('</style>', css + '\n</style>', 1)
+              html = html.replace('<body>', '<body>\n' + splash, 1)
+              html = html.replace('</body>', script + '\n</body>', 1)
+          else:
+              html = html.replace('</style>', '\n' + css + '\n</style>', 1)
+
+          # Force the header logo and tagline to use the uploaded logo and remain visible on mobile.
+          html = re.sub(r'(<div class="mini-logo"[^>]*>).*?(</div>)', r'\1<img src="images/logo.png?v=5" alt="Qibla Labs" style="width:100%;height:100%;display:block;object-fit:cover">\2', html, count=1, flags=re.S)
+          html = html.replace('<span>QIBLA LABS</span>', '<span class="brand-copy"><span>QIBLA LABS</span><small class="brand-tagline">CELESTIAL • ELITE • ELEGANCE</small></span>', 1)
+
+          p.write_text(html, encoding='utf-8')
+          PY
+      - name: Commit patched page
+        shell: bash
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix local logo placement and add cinematic galaxy splash"
+          git pull --rebase origin main
+          git push origin HEAD:main
