@@ -23,5 +23,33 @@
 @media(max-width:680px){:root{--container:min(100% - 28px,1180px);--radius:22px}.section{padding:88px 0}.nav-shell{gap:10px}.brand strong{font-size:.75rem}.brand small{font-size:.38rem}.brand img{width:42px;height:42px}.nav-actions .button{display:none}.hero{min-height:900px;align-items:end}.hero-media{background-position:67% center}.hero-scrim{background:linear-gradient(180deg,rgba(2,5,10,.22),rgba(2,5,10,.54) 35%,rgba(2,5,10,.97) 67%,#03060c)}html[dir=rtl] .hero-scrim{transform:none}.hero-content{padding-top:150px;padding-bottom:70px;gap:24px}.hero h1>span{font-size:clamp(3.2rem,17vw,5.4rem)}.hero h1 em{font-size:2rem}.hero-lead{font-size:.94rem}.hero-actions{display:grid}.hero-actions .button{width:100%}.trust-row{gap:12px;font-size:.61rem}.bearing-card{width:100%;max-width:none}.scroll-cue{display:none}.manifesto-grid{grid-template-columns:1fr;gap:25px}.section-index{grid-column:1}.principles{grid-column:1}.principles article{padding-right:46px}.section-heading{display:block}.section-heading>p{margin-top:22px}.system-card{min-height:440px;padding:24px}.system-head{margin-bottom:55px}.data-strip,.verification-line{left:24px;right:24px}.bento-grid{grid-template-columns:1fr}.bento,.bento-qibla,.bento-prayer,.bento-quran,.bento-celestial,.bento-offline{grid-column:1;min-height:280px}.bento-qibla{min-height:420px}.bento-qibla .bento-copy{max-width:75%}.mini-compass{width:245px;left:-5%;bottom:-12%}.film-grid{gap:38px}.cinema{border-radius:23px}.cinema-meta{left:15px;right:15px}.cinema-meta b{display:none}.quote blockquote{font-size:1.75rem}.footer-grid{grid-template-columns:1fr;justify-items:center}.footer nav{flex-wrap:wrap;justify-content:center}.footer p{text-align:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-media,.hero-orbit,.scroll-cue span,.final-glow{animation:none}.reveal{opacity:1;transform:none;transition:none}}
 
+/* Film-led refinement: quieter, human, and grounded in the original QiblaAstro film. */
+.hero{background:#03070d}
+.hero-media{background:radial-gradient(circle at 70% 38%,rgba(69,130,159,.16),transparent 24%),radial-gradient(circle at 18% 18%,rgba(216,182,91,.07),transparent 20%),linear-gradient(145deg,#020509 0%,#07121d 58%,#03070d 100%);animation:none;transform:none}
+.hero-media::before{content:"";position:absolute;inset:0;opacity:.24;background-image:radial-gradient(circle,rgba(255,255,255,.8) 0 1px,transparent 1.4px);background-size:96px 96px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+.hero-scrim{background:linear-gradient(90deg,rgba(2,5,10,.42),transparent 52%),linear-gradient(180deg,transparent 62%,#03060c)}
+.hero-content{grid-template-columns:minmax(0,1fr) minmax(380px,520px);gap:clamp(38px,6vw,88px)}
+.hero-film-card{position:relative;margin:0;align-self:center;border:1px solid rgba(255,255,255,.12);border-radius:30px;background:#07111b;box-shadow:0 38px 90px rgba(0,0,0,.45);overflow:visible}
+.hero-film-card>img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:29px;filter:saturate(.82) contrast(1.04)}
+.hero-film-card::after{content:"";position:absolute;inset:0;border-radius:29px;background:linear-gradient(180deg,transparent 48%,rgba(2,6,11,.88));pointer-events:none}
+.hero-film-card figcaption{position:absolute;z-index:2;right:24px;left:24px;bottom:24px;display:flex;align-items:end;justify-content:space-between;gap:24px}
+.hero-film-card figcaption span{color:var(--gold);font:700 .52rem var(--mono);letter-spacing:.12em}
+.hero-film-card figcaption b{max-width:245px;color:var(--white);font-size:.82rem;line-height:1.65;text-align:end}
+.hero-film-card .bearing-card{position:absolute;z-index:3;left:-34px;bottom:-74px;width:220px;padding:15px 17px;border-radius:18px;backdrop-filter:blur(22px)}
+.hero-film-card .bearing-card>strong{margin:8px 0 10px;font-size:1.9rem}
+.hero-film-card .bearing-foot{margin-top:10px}
+.film-story{padding-top:30px;background:linear-gradient(180deg,#06101b,var(--cosmos-950))}
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.story-card{position:relative;min-height:400px;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:#07111b}
+.story-card img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) brightness(.72);transition:transform .8s ease,filter .8s ease}
+.story-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 34%,rgba(3,7,13,.94) 88%)}
+.story-card figcaption{position:absolute;z-index:2;right:26px;left:26px;bottom:24px}
+.story-card figcaption span{color:var(--gold);font:700 .55rem var(--mono);letter-spacing:.1em}
+.story-card h3{margin:10px 0 5px;font-size:1.35rem}
+.story-card p{margin:0;color:var(--muted);font-size:.76rem}
+.story-card:hover img{transform:scale(1.025);filter:saturate(.9) brightness(.82)}
+@media(max-width:980px){.hero-content{grid-template-columns:1fr}.hero-film-card{width:min(100%,620px)}.hero-film-card .bearing-card{left:18px;bottom:-62px}.story-grid{grid-template-columns:1fr}.story-card{min-height:330px}}
+@media(max-width:680px){.hero{min-height:auto}.hero-content{padding-bottom:130px}.hero-film-card{margin-top:8px}.hero-film-card figcaption{right:18px;left:18px;bottom:18px;display:block}.hero-film-card figcaption b{display:block;margin-top:5px;text-align:start}.hero-film-card .bearing-card{left:14px;right:14px;bottom:-104px;width:auto}.film-story{padding-top:88px}.story-card{min-height:300px}.hero-media{background-position:center}.hero-scrim{background:linear-gradient(180deg,rgba(2,5,10,.16),rgba(2,5,10,.5) 42%,#03060c)}}
+
 /* Keep the generated hero's negative space on the left in both languages. */
 .hero-scrim{transform:none!important}.hero-content{direction:ltr}html[dir=rtl] .hero-copy,html[dir=rtl] .bearing-card{direction:rtl}html[dir=ltr] .hero-copy,html[dir=ltr] .bearing-card{direction:ltr}

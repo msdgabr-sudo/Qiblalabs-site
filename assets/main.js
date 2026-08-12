@@ -48,6 +48,11 @@
   video?.addEventListener('play', syncVideo);
   video?.addEventListener('pause', syncVideo);
   video?.addEventListener('ended', syncVideo);
+  video?.addEventListener('timeupdate', () => {
+    // The source file contains an editor end-card after the branded closing shot.
+    // Loop before it so the public experience ends on Qibla Labs, not the editor mark.
+    if (video.currentTime >= 59) video.currentTime = 0;
+  });
   syncVideo();
 
   const translations = {
@@ -57,6 +62,7 @@
       heroLead: 'A precisely computed Qibla bearing. An independent celestial verification using the Sun or Moon. Two separate systems—and a result you can understand and trust.',
       tryApp: 'Try QiblaAstro', discover: 'Discover how it works', offline: 'Works offline', privacy: 'Privacy first', independent: 'Two independent systems',
       trueBearing: 'True Qibla bearing', computed: 'Computed', verification: 'Verification limit', visionKicker: 'Not another compass',
+      heroFilmLabel: 'FROM THE ORIGINAL FILM', heroFilmCaption: 'Technology follows the sky. It does not replace it.',
       visionTitle: 'We do not build software.<br><span>We build trust.</span>',
       visionBody: 'Accuracy before appearance, privacy before convenience, and evidence before opinion. QiblaAstro keeps astronomical computation separate from visual verification and makes every result clear.',
       principleAccuracy: 'Understandable accuracy', principleAccuracyBody: 'A true bearing, clear source, and visible deviation.',
@@ -64,6 +70,11 @@
       principleEvidence: 'Evidence first', principleEvidenceBody: 'Independent verification through the Sun or Moon and camera geometry.',
       systemsTitle: 'Two independent paths.<br><span>One confidence.</span>',
       systemsIntro: 'Celestial verification never overwrites the computed Qibla. Each system keeps its own inputs and result, then shows you the comparison clearly.',
+      storyTitle: 'One story.<br><span>Three quiet moments.</span>',
+      storyIntro: 'Instead of an overloaded fantasy scene, the experience follows the film: the sky is the guide, the human is the seeker, and QiblaAstro is the instrument.',
+      storySky: 'The sky was our first guide', storySkyBody: 'It shaped our first understanding of direction and time.',
+      storySailor: 'Navigation is human knowledge', storySailorBody: 'People observed celestial bodies to find their way.',
+      storyApp: 'Today, the guide is in your hand', storyAppBody: 'GNSS for computation; the Sun or Moon for verification.',
       computeTitle: 'Computational Qibla',
       computeBody: 'Calculates the true Qibla bearing from your geographic location using GNSS and spherical geometry—away from magnetic compass interference.',
       verifyTitle: 'Astronomical verification',

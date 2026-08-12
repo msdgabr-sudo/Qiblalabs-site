@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="/images/qibla-celestial-hero.webp" type="image/webp">
+  <link rel="preload" as="image" href="/images/film-qiblaastro.webp" type="image/webp">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Qibla Labs">
@@ -73,12 +73,15 @@
           </div>
         </div>
 
-        <aside class="bearing-card reveal" aria-label="مثال لاتجاه القبلة">
-          <div class="bearing-top"><span data-i18n="trueBearing">اتجاه القبلة الحقيقي</span><i>LIVE</i></div>
-          <strong>135.1°</strong>
-          <div class="bearing-scale" aria-hidden="true"><span></span><span class="active"></span><span></span><span></span><span></span></div>
-          <div class="bearing-foot"><span><b>GNSS</b><small data-i18n="computed">محسوب</small></span><span><b>±1.0°</b><small data-i18n="verification">حد التحقق</small></span></div>
-        </aside>
+        <figure class="hero-film-card reveal">
+          <img src="/images/film-qiblaastro.webp" width="720" height="405" alt="هاتف يعرض التحقق الفلكي من اتجاه القبلة عند الأفق">
+          <figcaption><span data-i18n="heroFilmLabel">من الفيلم الأصلي</span><b data-i18n="heroFilmCaption">التقنية تتبع السماء، لا تستبدلها.</b></figcaption>
+          <div class="bearing-card" aria-label="مثال لاتجاه القبلة">
+            <div class="bearing-top"><span data-i18n="trueBearing">اتجاه القبلة الحقيقي</span><i>LIVE</i></div>
+            <strong>135.1°</strong>
+            <div class="bearing-foot"><span><b>GNSS</b><small data-i18n="computed">محسوب</small></span><span><b>±1.0°</b><small data-i18n="verification">حد التحقق</small></span></div>
+          </div>
+        </figure>
       </div>
       <a class="scroll-cue" href="#manifesto" aria-label="مرر للأسفل"><span></span></a>
     </section>
@@ -124,6 +127,20 @@
       </div>
     </section>
 
+    <section class="film-story section" aria-labelledby="story-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><p class="kicker">THE FILM AS A DESIGN LANGUAGE</p><h2 id="story-title" data-i18n="storyTitle">قصة واحدة.<br><span>ثلاث لحظات هادئة.</span></h2></div>
+          <p data-i18n="storyIntro">بدل مشهد خيالي مزدحم، تستمد التجربة هويتها من رحلة الفيلم: السماء هي الدليل، الإنسان هو الباحث، وQiblaAstro هو الأداة.</p>
+        </div>
+        <div class="story-grid">
+          <figure class="story-card reveal"><img src="/images/film-sky.webp" width="720" height="405" loading="lazy" alt="الأرض والسماء المرصعة بالنجوم"><figcaption><span>01 / SKY</span><h3 data-i18n="storySky">السماء دليلنا الأول</h3><p data-i18n="storySkyBody">منها بدأ فهم الاتجاه والزمن.</p></figcaption></figure>
+          <figure class="story-card reveal"><img src="/images/film-sailor.webp" width="720" height="405" loading="lazy" alt="ملاح يستخدم آلة رصد فلكية في البحر"><figcaption><span>02 / NAVIGATION</span><h3 data-i18n="storySailor">الملاحة معرفة إنسانية</h3><p data-i18n="storySailorBody">راقب الإنسان الأجرام ليجد طريقه.</p></figcaption></figure>
+          <figure class="story-card reveal"><img src="/images/film-qiblaastro.webp" width="720" height="405" loading="lazy" alt="واجهة QiblaAstro على هاتف عند الغروب"><figcaption><span>03 / QIBLAASTRO</span><h3 data-i18n="storyApp">اليوم، الدليل في يدك</h3><p data-i18n="storyAppBody">GNSS للحساب، والشمس أو القمر للتحقق.</p></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
     <section class="experience section" id="experience">
       <div class="container">
         <div class="section-heading compact reveal">
@@ -146,7 +163,7 @@
       <div class="container film-grid">
         <div class="film-copy reveal"><p class="kicker">QIBLAASTRO FILM</p><h2 data-i18n="filmTitle">من السماء…<br><span>إلى أدق اتجاه.</span></h2><p data-i18n="filmBody">رحلة بصرية قصيرة تشرح كيف يتحول الحساب الفلكي إلى توجيه واضح، ثم إلى تحقق يمكنك رؤيته بنفسك.</p><button class="film-play" id="filmPlay" type="button" aria-controls="heroVideo"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></span><b data-i18n="playFilm">شاهد الفيلم</b><small>01:02</small></button></div>
         <div class="cinema reveal" id="cinema">
-          <video id="heroVideo" poster="/images/qibla-celestial-hero.webp" muted loop playsinline preload="metadata"><source src="/videos/hero-video.mp4" type="video/mp4"></video>
+          <video id="heroVideo" poster="/images/film-qiblaastro.webp" muted loop playsinline preload="metadata"><source src="/videos/hero-video.mp4" type="video/mp4"></video>
           <button class="video-toggle" id="videoToggle" type="button" aria-label="تشغيل الفيديو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></button>
           <div class="cinema-meta"><span>QIBLA LABS ORIGINAL</span><b>THE SKY KNOWS THE WAY</b></div>
         </div>
