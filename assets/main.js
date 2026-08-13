@@ -22,20 +22,62 @@
   }
 
   const video = document.getElementById('heroVideo');
+  const videoBg = document.getElementById('videoBg');
   const cinema = document.getElementById('cinema');
   const videoToggle = document.getElementById('videoToggle');
   const filmPlay = document.getElementById('filmPlay');
+  const soundToggle = document.getElementById('soundToggle');
+  const videoSeek = document.getElementById('videoSeek');
+  const videoTime = document.getElementById('videoTime');
+  const fullscreenToggle = document.getElementById('fullscreenToggle');
+  const videoCaption = document.getElementById('videoCaption');
   const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg>';
   const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+  const subtitles = [
+    { start: 0, end: 4.5, text: 'منذ القدم، اهتدى البحّارة بالسماء والنجوم.' },
+    { start: 4.5, end: 9.5, text: 'لكن معرفة اتجاه القبلة تحتاج إلى أكثر من التخمين.' },
+    { start: 9.5, end: 15, text: 'تبدأ الرحلة بحساب الاتجاه الحقيقي من موقعك.' },
+    { start: 15, end: 21, text: 'ثم يأتي التحقق الفلكي باستخدام الشمس أو القمر.' },
+    { start: 21, end: 27.5, text: 'تُقارن القراءة الفعلية بالاتجاه المحسوب بدقة.' },
+    { start: 27.5, end: 34, text: 'حتى يصبح الانحراف واضحًا ومفهومًا أمامك.' },
+    { start: 34, end: 41, text: 'QiblaAstro Ultimate… ميزان الكعبة.' },
+    { start: 41, end: 59, text: 'انظر إلى السماء… تجد طريقك.' }
+  ];
+  if (video?.textTracks?.[0]) video.textTracks[0].mode = 'hidden';
+  const formatTime = seconds => {
+    const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+    return `${Math.floor(safe / 60)}:${Math.floor(safe % 60).toString().padStart(2, '0')}`;
+  };
+  const syncBackdrop = () => {
+    if (!video || !videoBg) return;
+    if (Math.abs(videoBg.currentTime - video.currentTime) > .22) videoBg.currentTime = video.currentTime;
+    if (video.paused) videoBg.pause();
+    else videoBg.play().catch(() => {});
+  };
   const syncVideo = () => {
     if (!video || !cinema || !videoToggle) return;
     cinema.classList.toggle('is-playing', !video.paused);
+    cinema.classList.toggle('is-muted', video.muted);
     videoToggle.innerHTML = video.paused ? playIcon : pauseIcon;
-    videoToggle.setAttribute('aria-label', video.paused ? 'تشغيل الفيديو' : 'إيقاف الفيديو مؤقتًا');
+    videoToggle.setAttribute('aria-label', video.paused ? 'تشغيل الفيديو بالصوت' : 'إيقاف الفيديو مؤقتًا');
+    if (soundToggle) {
+      soundToggle.innerHTML = `<span aria-hidden="true">${video.muted ? '🔇' : '🔊'}</span>`;
+      soundToggle.setAttribute('aria-label', video.muted ? 'تشغيل الصوت' : 'كتم الصوت');
+    }
+    const duration = Math.min(Number.isFinite(video.duration) ? video.duration : 62, 59);
+    if (videoSeek) videoSeek.value = duration ? String(Math.round((video.currentTime / duration) * 1000)) : '0';
+    if (videoTime) videoTime.textContent = `${formatTime(video.currentTime)} / ${formatTime(duration)}`;
+    if (videoCaption) {
+      const cue = subtitles.find(item => video.currentTime >= item.start && video.currentTime < item.end) || subtitles[subtitles.length - 1];
+      videoCaption.textContent = cue.text;
+    }
+    syncBackdrop();
   };
   const toggleVideo = async () => {
     if (!video) return;
     if (video.paused) {
+      if (video.currentTime >= 58.7) video.currentTime = 0;
+      video.muted = false;
       try { await video.play(); } catch (_) {}
     } else video.pause();
     syncVideo();
@@ -50,9 +92,34 @@
   video?.addEventListener('ended', syncVideo);
   video?.addEventListener('timeupdate', () => {
     // The source file contains an editor end-card after the branded closing shot.
-    // Loop before it so the public experience ends on Qibla Labs, not the editor mark.
-    if (video.currentTime >= 59) video.currentTime = 0;
+    // Stop on the branded closing shot so the editor mark is never shown.
+    if (video.currentTime >= 58.9) {
+      video.pause();
+      video.currentTime = 58.8;
+    }
+    syncVideo();
   });
+  soundToggle?.addEventListener('click', () => {
+    if (!video) return;
+    video.muted = !video.muted;
+    syncVideo();
+  });
+  videoSeek?.addEventListener('input', () => {
+    if (!video) return;
+    const duration = Math.min(Number.isFinite(video.duration) ? video.duration : 59, 59);
+    video.currentTime = (Number(videoSeek.value) / 1000) * duration;
+    syncVideo();
+  });
+  fullscreenToggle?.addEventListener('click', async () => {
+    if (!cinema) return;
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else if (cinema.requestFullscreen) await cinema.requestFullscreen();
+      else if (video?.webkitEnterFullscreen) video.webkitEnterFullscreen();
+    } catch (_) {}
+  });
+  video?.addEventListener('loadedmetadata', syncVideo);
+  video?.addEventListener('volumechange', syncVideo);
   syncVideo();
 
   const translations = {
@@ -60,7 +127,7 @@
       navSystems: 'Two systems', navExperience: 'Experience', navFilm: 'Film', openApp: 'Open app',
       eyebrow: 'THE SKY KNOWS THE WAY', heroArabic: 'ASTRONOMICAL QIBLA COMPASS',
       heroLead: 'A precisely computed Qibla bearing. An independent celestial verification using the Sun or Moon. Two separate systems—and a result you can understand and trust.',
-      tryApp: 'Try QiblaAstro', discover: 'Discover how it works', offline: 'Works offline', privacy: 'Privacy first', independent: 'Two independent systems',
+      tryApp: 'Open QiblaAstro app', discover: 'Discover how it works', offline: 'Works offline', privacy: 'Privacy first', independent: 'Two independent systems',
       trueBearing: 'True Qibla bearing', computed: 'Computed', verification: 'Verification limit', visionKicker: 'Not another compass',
       heroFilmLabel: 'FROM THE ORIGINAL FILM', heroFilmCaption: 'Technology follows the sky. It does not replace it.',
       realInterface: 'REAL APP INTERFACE', realInterfaceBody: 'Editorially reframed to explain the experience while preserving the original measurements.',
@@ -103,10 +170,10 @@
       bentoSky: 'Sun, Moon, and horizon', bentoSkyBody: 'Understandable educational astronomy—with no astrology.',
       bentoOffline: 'Works offline', bentoOfflineBody: 'After the first load, essential features stay with you.',
       filmTitle: 'From the sky…<br><span>to the most precise direction.</span>',
-      filmBody: 'A short visual journey showing how astronomical computation becomes clear guidance—and then a verification you can see for yourself.',
-      playFilm: 'Watch the film',
+      filmBody: 'Start with the short film, then explore every screen as it truly works. Sound is available on play, with Arabic subtitles throughout the journey.',
+      playFilm: 'Watch with sound and subtitles',
       finalTitle: 'Look to the sky…<br><span>and you will find your way.</span>',
-      finalBody: 'Start by finding the Qibla, then verify the precision yourself.', launchNow: 'Launch the app now',
+      finalBody: 'Start by finding the Qibla, then verify the precision yourself.', launchNow: 'Open the app now',
       privacyPolicy: 'Privacy', terms: 'Terms', contact: 'Contact', rights: 'All Rights Reserved.'
     }
   };

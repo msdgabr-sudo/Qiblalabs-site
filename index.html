@@ -28,8 +28,8 @@
   <meta name="twitter:description" content="Astronomical Qibla Compass by Qibla Labs.">
   <meta name="twitter:image" content="https://qiblalabs.com/images/qiblalabs-share-v4.png">
 
-  <link rel="stylesheet" href="/assets/styles.css?v=20260813-real-product-v2">
-  <script src="/assets/main.js?v=20260813-real-product-v2" defer></script>
+  <link rel="stylesheet" href="/assets/styles.css?v=20260813-final-film-v3">
+  <script src="/assets/main.js?v=20260813-final-film-v3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
@@ -47,7 +47,7 @@
       </div>
       <div class="nav-actions">
         <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">EN</button>
-        <a class="button button-primary button-small" href="https://app.qiblalabs.com" data-i18n="openApp">تشغيل التطبيق</a>
+        <a class="button button-primary button-small app-link" href="https://app.qiblalabs.com" target="_blank" rel="noopener" data-i18n="openApp" aria-label="فتح تطبيق QiblaAstro في نافذة جديدة">فتح التطبيق</a>
       </div>
     </nav>
   </header>
@@ -64,7 +64,7 @@
           <h1 id="hero-title"><span>QiblaAstro</span><em data-i18n="heroArabic">مِيزَانُ الْكَعْبَةِ</em></h1>
           <p class="hero-lead" data-i18n="heroLead">اتجاه قبلة محسوب بدقة. وتحقق فلكي مستقل بالشمس أو القمر. نظامان منفصلان، ونتيجة يمكنك فهمها والثقة بها.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="https://app.qiblalabs.com"><span data-i18n="tryApp">جرّب QiblaAstro</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="button button-primary app-link" href="https://app.qiblalabs.com" target="_blank" rel="noopener" aria-label="فتح تطبيق QiblaAstro في نافذة جديدة"><span data-i18n="tryApp">افتح تطبيق QiblaAstro</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             <a class="button button-quiet" href="#systems"><span data-i18n="discover">اكتشف كيف يعمل</span></a>
           </div>
           <div class="trust-row" aria-label="مزايا أساسية">
@@ -83,7 +83,34 @@
           <figcaption><span data-i18n="realInterface">واجهة حقيقية من التطبيق</span><b data-i18n="realInterfaceBody">أُعيد تأطيرها لتشرح التجربة، مع الحفاظ على القياسات الأصلية.</b></figcaption>
         </figure>
       </div>
-      <a class="scroll-cue" href="#manifesto" aria-label="مرر للأسفل"><span></span></a>
+      <a class="scroll-cue" href="#film" aria-label="انتقل إلى الفيلم التعريفي"><span></span></a>
+    </section>
+
+    <section class="film section" id="film">
+      <div class="container film-grid">
+        <div class="film-copy reveal">
+          <p class="kicker">QIBLAASTRO FILM</p>
+          <h2 data-i18n="filmTitle">من السماء…<br><span>إلى أدق اتجاه.</span></h2>
+          <p data-i18n="filmBody">ابدأ بالفيلم القصير، ثم استكشف كل شاشة على حقيقتها. الصوت متاح عند التشغيل، والترجمة العربية ظاهرة طوال الرحلة.</p>
+          <button class="film-play" id="filmPlay" type="button" aria-controls="heroVideo"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></span><b data-i18n="playFilm">شاهد الفيلم بالصوت والترجمة</b><small>01:02</small></button>
+        </div>
+        <div class="cinema reveal" id="cinema">
+          <video class="cinema-backdrop" id="videoBg" muted playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="/videos/hero-video.mp4" type="video/mp4"></video>
+          <video class="cinema-main" id="heroVideo" poster="/images/film-qiblaastro.webp" playsinline preload="metadata">
+            <source src="/videos/hero-video.mp4" type="video/mp4">
+            <track kind="captions" src="/videos/hero-video-ar.vtt" srclang="ar" label="العربية" default>
+          </video>
+          <button class="video-toggle" id="videoToggle" type="button" aria-label="تشغيل الفيديو بالصوت"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></button>
+          <p class="video-caption" id="videoCaption" lang="ar" dir="rtl" aria-live="polite">منذ القدم، اهتدى البحّارة بالسماء والنجوم.</p>
+          <div class="video-controls" aria-label="أدوات تشغيل الفيلم">
+            <button id="soundToggle" type="button" aria-label="كتم الصوت"><span aria-hidden="true">🔊</span></button>
+            <input id="videoSeek" type="range" min="0" max="1000" value="0" aria-label="التقدم في الفيديو">
+            <span id="videoTime" aria-hidden="true">0:00 / 1:02</span>
+            <button id="fullscreenToggle" type="button" aria-label="عرض بملء الشاشة"><span aria-hidden="true">⛶</span></button>
+          </div>
+          <div class="cinema-meta"><span>QIBLA LABS ORIGINAL</span><b>ARABIC SUBTITLES • SOUND ON</b></div>
+        </div>
+      </div>
     </section>
 
     <section class="product-tour section" id="product">
@@ -217,17 +244,6 @@
       </div>
     </section>
 
-    <section class="film section" id="film">
-      <div class="container film-grid">
-        <div class="film-copy reveal"><p class="kicker">QIBLAASTRO FILM</p><h2 data-i18n="filmTitle">من السماء…<br><span>إلى أدق اتجاه.</span></h2><p data-i18n="filmBody">رحلة بصرية قصيرة تشرح كيف يتحول الحساب الفلكي إلى توجيه واضح، ثم إلى تحقق يمكنك رؤيته بنفسك.</p><button class="film-play" id="filmPlay" type="button" aria-controls="heroVideo"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></span><b data-i18n="playFilm">شاهد الفيلم</b><small>01:02</small></button></div>
-        <div class="cinema reveal" id="cinema">
-          <video id="heroVideo" poster="/images/film-qiblaastro.webp" muted loop playsinline preload="metadata"><source src="/videos/hero-video.mp4" type="video/mp4"></video>
-          <button class="video-toggle" id="videoToggle" type="button" aria-label="تشغيل الفيديو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></button>
-          <div class="cinema-meta"><span>QIBLA LABS ORIGINAL</span><b>THE SKY KNOWS THE WAY</b></div>
-        </div>
-      </div>
-    </section>
-
     <section class="quote section">
       <div class="container quote-inner reveal">
         <span class="quran-mark">۞</span>
@@ -243,7 +259,7 @@
         <p class="kicker">QIBLAASTRO BY QIBLA LABS</p>
         <h2 data-i18n="finalTitle">انظر إلى السماء…<br><span>تجد طريقك.</span></h2>
         <p data-i18n="finalBody">ابدأ بتحديد اتجاه القبلة، ثم اختبر الدقة بنفسك.</p>
-        <a class="button button-primary button-large" href="https://app.qiblalabs.com"><span data-i18n="launchNow">تشغيل التطبيق الآن</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="button button-primary button-large app-link" href="https://app.qiblalabs.com" target="_blank" rel="noopener" aria-label="فتح تطبيق QiblaAstro في نافذة جديدة"><span data-i18n="launchNow">فتح التطبيق الآن</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
   </main>
