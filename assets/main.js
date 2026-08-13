@@ -142,11 +142,18 @@
       gateTracking: 'Body tracking', gateStability: 'Phone stability', gateQuality: 'Observation quality',
       astroNote: 'The digital Qibla result is never copied into the astronomical measurement; every path keeps its own inputs and result record.',
       worshipTitle: 'From precise measurement to a calm spiritual experience.',
-      quranVisualTitle: 'An olive Quran experience made for reading.', quranVisualBody: 'Surahs, Juz, search, bookmarks, and Khatmati—a plan that adapts to your actual reading.',
+      comfortIntro: 'The colors are not decoration. Velvet olive, restrained gold, and warm text tones reduce glare and keep long reading comfortable—so the interface recedes and the words remain present.',
+      quranVisualTitle: 'An olive Quran experience made for reading.', quranVisualBody: 'A low-glare velvet olive ground, warm ivory text, and restrained gold for headings and markers. Every detail is tuned for eye comfort and a calm reading presence.',
+      quranPoint1: 'Gentle contrast for extended reading', quranPoint2: 'Clear Quran typography with generous breathing room', quranPoint3: 'Surahs, Juz, search, and Khatmati in one system',
+      quranTabRead: 'Reading', quranTabSurahs: 'Surahs', quranTabJuz: 'Juz', quranTabSearch: 'Search', quranTabKhatma: 'Khatmati',
       prayerVisualTitle: 'Prayer times shaped around your day.', prayerVisualBody: 'Next prayer, countdown, advance reminder, and a muezzin voice you choose.',
-      azkarVisualTitle: 'One remembrance. Full presence.', azkarVisualBody: 'A focused reading card, a calm counter, and a recurring audio reminder with your chosen dhikr and interval.',
+      prayerTimesCaption: 'Prayer times and next prayer', prayerSettingsCaption: 'Adhan, reminders, and location',
+      azkarVisualTitle: 'One remembrance. Full presence.', azkarVisualBody: 'One clear card, generous Arabic type, and calm whitespace prevent crowded reading. A gentle counter follows your progress, with an audio reminder for the dhikr and interval you choose.',
+      azkarTabRead: 'Dhikr & counter', azkarTabHome: 'Categories', azkarTabDua: 'Supplications', azkarTabReminder: 'Audio reminder',
       serenityVisualTitle: 'Rest and serenity.', serenityVisualBody: 'Choose the reciter, narration, and Surah in a simple, peaceful player.',
-      knowledgeTitle: 'Understand the sky you use as a guide.', knowledgeBody: 'Falaki presents the Sun and Moon azimuth, altitude, state, and Arabic mansions, plus educational guidance about Polaris and navigation. GNSS makes the position source and accuracy clear.',
+      knowledgeTitle: 'The sky, as it is now.', knowledgeBody: 'Falaki does not present isolated numbers. It explains the Sun and Moon position and when they can guide, then places Polaris, celestial navigation, and GNSS in one clear educational context—with no astrology or predictions.',
+      falakiSun: 'The Sun now', falakiSunBody: 'Azimuth, altitude, state, and Arabic solar mansion.', falakiMoon: 'The Moon now', falakiMoonBody: 'Phase, illumination, azimuth, and altitude.',
+      falakiGuide: 'How can the sky indicate Qibla?', falakiGuideBody: 'A reference appears only when its observation is practical.', falakiPolaris: 'Polaris', falakiPolarisBody: 'A celestial reference for north and the Qibla relative to it.', falakiNavigation: 'From sky to modern navigation', falakiNavigationBody: 'The sextant, stars, and GNSS in one educational story.',
       languagesTitle: 'Five languages. One identity.', languagesBody: 'Arabic, English, French, Indonesian, and Urdu—with sensitive religious text and scientific interfaces kept protected.',
       visionTitle: 'We do not build software.<br><span>We build trust.</span>',
       visionBody: 'Accuracy before appearance, privacy before convenience, and evidence before opinion. QiblaAstro keeps astronomical computation separate from visual verification and makes every result clear.',
@@ -194,6 +201,45 @@
       langToggle.textContent = isEnglish ? 'AR' : 'EN';
       langToggle.setAttribute('aria-label', isEnglish ? 'التبديل إلى العربية' : 'Switch to English');
     }
+    syncGalleryCaptions();
   };
+
+  const galleryEnglishCaptions = {
+    'quran-reader.webp': 'Reading', 'quran-home.webp': 'Surahs', 'quran-juz.webp': 'Juz', 'quran-search.webp': 'Search', 'quran-khatma.webp': 'Khatmati',
+    'azkar-reading.webp': 'Dhikr & counter', 'azkar-home.webp': 'Categories', 'azkar-dua.webp': 'Supplications', 'azkar-reminder.webp': 'Audio reminder'
+  };
+  function syncGalleryCaptions() {
+    document.querySelectorAll('.showcase-tabs button.active').forEach(button => {
+      const image = document.getElementById(`${button.dataset.gallery}GalleryImage`);
+      const caption = document.getElementById(`${button.dataset.gallery}GalleryCaption`);
+      if (!image || !caption) return;
+      const file = button.dataset.src.split('/').pop();
+      caption.textContent = language === 'en' ? galleryEnglishCaptions[file] : button.dataset.caption;
+    });
+  }
+  document.querySelectorAll('.showcase-tabs button[data-gallery]').forEach(button => {
+    button.addEventListener('click', () => {
+      const group = button.dataset.gallery;
+      const image = document.getElementById(`${group}GalleryImage`);
+      const caption = document.getElementById(`${group}GalleryCaption`);
+      if (!image || !caption) return;
+      document.querySelectorAll(`.showcase-tabs button[data-gallery="${group}"]`).forEach(item => {
+        const selected = item === button;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-selected', String(selected));
+      });
+      const frame = image.closest('.screen-frame');
+      frame?.classList.add('switching');
+      const swap = () => {
+        image.onload = () => frame?.classList.remove('switching');
+        image.src = button.dataset.src;
+        image.alt = button.dataset.alt;
+        const file = button.dataset.src.split('/').pop();
+        caption.textContent = language === 'en' ? galleryEnglishCaptions[file] : button.dataset.caption;
+        if (image.complete) frame?.classList.remove('switching');
+      };
+      window.setTimeout(swap, reducedMotion ? 0 : 120);
+    });
+  });
   langToggle?.addEventListener('click', () => applyLanguage(language === 'ar' ? 'en' : 'ar'));
 })();
