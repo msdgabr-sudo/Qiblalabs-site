@@ -13,7 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="/images/film-qiblaastro.webp" type="image/webp">
+  <link rel="preload" as="image" href="/images/qibla-celestial-hero-v2.webp" type="image/webp">
+  <link rel="preload" as="image" href="/images/app/home.webp" type="image/webp">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Qibla Labs">
@@ -27,8 +28,8 @@
   <meta name="twitter:description" content="Astronomical Qibla Compass by Qibla Labs.">
   <meta name="twitter:image" content="https://qiblalabs.com/images/qiblalabs-share-v4.png">
 
-  <link rel="stylesheet" href="/assets/styles.css?v=20260813-world-class">
-  <script src="/assets/main.js?v=20260813-world-class" defer></script>
+  <link rel="stylesheet" href="/assets/styles.css?v=20260813-real-product-v2">
+  <script src="/assets/main.js?v=20260813-real-product-v2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
@@ -41,7 +42,7 @@
       </a>
       <div class="nav-links">
         <a href="#systems" data-i18n="navSystems">النظامان</a>
-        <a href="#experience" data-i18n="navExperience">التجربة</a>
+        <a href="#product" data-i18n="navExperience">التجربة</a>
         <a href="#film" data-i18n="navFilm">الفيلم</a>
       </div>
       <div class="nav-actions">
@@ -73,17 +74,74 @@
           </div>
         </div>
 
-        <figure class="hero-film-card reveal">
-          <img src="/images/film-qiblaastro.webp" width="720" height="405" alt="هاتف يعرض التحقق الفلكي من اتجاه القبلة عند الأفق">
-          <figcaption><span data-i18n="heroFilmLabel">من الفيلم الأصلي</span><b data-i18n="heroFilmCaption">التقنية تتبع السماء، لا تستبدلها.</b></figcaption>
-          <div class="bearing-card" aria-label="مثال لاتجاه القبلة">
-            <div class="bearing-top"><span data-i18n="trueBearing">اتجاه القبلة الحقيقي</span><i>LIVE</i></div>
-            <strong>135.1°</strong>
-            <div class="bearing-foot"><span><b>GNSS</b><small data-i18n="computed">محسوب</small></span><span><b>±1.0°</b><small data-i18n="verification">حد التحقق</small></span></div>
+        <figure class="hero-product reveal" aria-label="واجهة QiblaAstro الحقيقية بعد تنقيحها للعرض">
+          <div class="hero-app-shell">
+            <div class="app-window-bar"><span></span><span></span><span></span><b>QiblaAstro / LIVE</b></div>
+            <div class="hero-screen-window"><img src="/images/app/home.webp" width="691" height="1394" alt="واجهة QiblaAstro الرئيسية"></div>
           </div>
+          <div class="hero-dial"><img src="/images/app/compass-dial.webp" width="691" height="660" alt="قرص القبلة الرقمية"></div>
+          <figcaption><span data-i18n="realInterface">واجهة حقيقية من التطبيق</span><b data-i18n="realInterfaceBody">أُعيد تأطيرها لتشرح التجربة، مع الحفاظ على القياسات الأصلية.</b></figcaption>
         </figure>
       </div>
       <a class="scroll-cue" href="#manifesto" aria-label="مرر للأسفل"><span></span></a>
+    </section>
+
+    <section class="product-tour section" id="product">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><p class="kicker">REAL PRODUCT. CLEAR STORY.</p><h2 data-i18n="tourTitle">كل شاشة لها وظيفة.<br><span>وكل نتيجة لها معنى.</span></h2></div>
+          <p data-i18n="tourIntro">ليست صورًا موضوعة داخل هواتف متكررة. صغنا كل واجهة كجزء من قصة المنتج: القياس، ثم التحقق، ثم العبادة والمعرفة.</p>
+        </div>
+
+        <article class="chapter chapter-compass reveal">
+          <div class="chapter-copy">
+            <span class="chapter-no">01 / DIGITAL QIBLA</span>
+            <h3 data-i18n="digitalTitle">درجة حقيقية، لا سهم مبهم.</h3>
+            <p data-i18n="digitalBody">يعرض QiblaAstro اتجاه الهاتف، القبلة الحسابية، درجة الانحراف وجودة القراءة. ثم يحوّل الخطأ الزاوي إلى أثر مسافي مفهوم.</p>
+            <div class="metric-row"><span><b>135.5°</b><small data-i18n="phoneHeading">اتجاه الهاتف</small></span><span><b>136.0°</b><small data-i18n="qiblaBearing">القبلة الحسابية</small></span><span><b>0.5°</b><small data-i18n="deviationLabel">الانحراف</small></span></div>
+            <p class="science-note" data-i18n="distanceNote">في نموذج المسافة الظاهر داخل التطبيق: انحراف 5° يقارب 113 كم عند المسافة المرجعية الحالية.</p>
+          </div>
+          <div class="compass-composition">
+            <div class="dial-halo"></div>
+            <img class="dial-asset" src="/images/app/compass-dial.webp" width="691" height="660" loading="lazy" alt="قرص البوصلة الرقمية بدرجاته الحقيقية">
+            <div class="deviation-panel"><img src="/images/app/deviation.webp" width="620" height="245" loading="lazy" alt="حاسبة أثر الانحراف بالدرجات والكيلومترات"></div>
+          </div>
+        </article>
+
+        <article class="chapter chapter-astro reveal">
+          <div class="astro-viewport">
+            <img src="/images/app/astro-camera.webp" width="691" height="1295" loading="lazy" alt="واجهة الرصد الفلكي أثناء الالتقاط التلقائي">
+            <i class="scan-line"></i><span class="corner corner-a"></span><span class="corner corner-b"></span>
+            <div class="astro-live"><i></i> CELESTIAL LOCK</div>
+          </div>
+          <div class="chapter-copy">
+            <span class="chapter-no">02 / ASTRONOMICAL VERIFICATION</span>
+            <h3 data-i18n="astroTitle">راقب جرمًا معروفًا.<br>ثم تحقّق من الاتجاه.</h3>
+            <p data-i18n="astroBody">تلتقط الكاميرا الشمس أو القمر تلقائيًا بعد ثبات الرصد. يدمج المحرك موضع الجرم، هندسة الصورة، الجاذبية والوقت، ثم يحسب اتجاه الكاميرا الحقيقي ويقارنه بالقبلة الحسابية.</p>
+            <div class="gate-list"><span><i></i><b data-i18n="gateTracking">تتبّع الجرم</b><em>80%</em></span><span><i></i><b data-i18n="gateStability">ثبات الهاتف</b><em>87%</em></span><span><i></i><b data-i18n="gateQuality">جودة الرصد</b><em>64%</em></span></div>
+            <p class="science-note" data-i18n="astroNote">لا تُنسخ نتيجة القبلة الرقمية إلى القياس الفلكي؛ لكل مسار مدخلاته وسجل نتيجته المستقل.</p>
+          </div>
+        </article>
+
+        <div class="chapter-heading reveal"><span class="chapter-no">03 / WORSHIP EXPERIENCE</span><h3 data-i18n="worshipTitle">من القياس الدقيق إلى تجربة روحانية هادئة.</h3></div>
+        <div class="worship-mosaic">
+          <article class="visual-card quran-visual reveal"><div class="visual-copy"><p>القرآن الكريم</p><h3 data-i18n="quranVisualTitle">مصحف زيتوني صُمّم للقراءة.</h3><span data-i18n="quranVisualBody">فهرس السور والأجزاء، البحث، العلامات، و«ختمتي» بخطة تتكيف مع قراءتك الفعلية.</span></div><div class="quran-stack"><img class="quran-page" src="/images/app/quran-reader.webp" width="691" height="1394" loading="lazy" alt="صفحة المصحف الزيتونية"><img class="khatma-page" src="/images/app/khatma.webp" width="691" height="1394" loading="lazy" alt="خطة ختمتي"></div></article>
+          <article class="visual-card prayer-visual reveal"><div class="visual-copy"><p>PRAYER & ADHAN</p><h3 data-i18n="prayerVisualTitle">المواقيت بصيغة يومك.</h3><span data-i18n="prayerVisualBody">الصلاة القادمة، العد التنازلي، تنبيه مسبق، وصوت مؤذن تختاره.</span></div><div class="soft-window"><img src="/images/app/prayer.webp" width="691" height="1394" loading="lazy" alt="مواقيت الصلاة وإعدادات الأذان"></div></article>
+          <article class="visual-card azkar-visual reveal"><div class="visual-copy"><p>AZKAR</p><h3 data-i18n="azkarVisualTitle">ذكر واحد. حضور كامل.</h3><span data-i18n="azkarVisualBody">بطاقة قراءة واضحة، عدّاد هادئ، وتنبيه صوتي دوري تختار ذكره ووقته.</span></div><div class="paper-pair"><img src="/images/app/azkar.webp" width="691" height="1394" loading="lazy" alt="أقسام الأذكار"><img src="/images/app/azkar-audio.webp" width="691" height="1394" loading="lazy" alt="إعداد تنبيه الأذكار بالصوت"></div></article>
+          <article class="visual-card serenity-visual reveal"><div class="visual-copy"><p>SERENITY</p><h3 data-i18n="serenityVisualTitle">راحة وسكينة.</h3><span data-i18n="serenityVisualBody">اختيار القارئ والرواية والسورة في مشغل بسيط ومريح.</span></div><div class="player-crop"><img src="/images/app/serenity.webp" width="691" height="1394" loading="lazy" alt="مشغل راحة وسكينة"></div></article>
+        </div>
+
+        <article class="chapter chapter-knowledge reveal">
+          <div class="chapter-copy">
+            <span class="chapter-no">04 / SKY & POSITION</span>
+            <h3 data-i18n="knowledgeTitle">اعرف السماء التي تستدل بها.</h3>
+            <p data-i18n="knowledgeBody">تعرض شاشة «فلكي» سمت الشمس والقمر وارتفاعهما وحالتهما ومنازلهما العربية، مع معرفة تعليمية عن نجم الشمال والملاحة. وتعرض GNSS مصدر الموقع ودقته بوضوح.</p>
+            <div class="knowledge-tags"><span>☀ SUN</span><span>☾ MOON</span><span>✦ POLARIS</span><span>GNSS</span></div>
+          </div>
+          <div class="sky-stack"><img class="moon-panel" src="/images/app/falaki-moon.webp" width="691" height="1394" loading="lazy" alt="بيانات القمر الفلكية"><img class="sun-panel" src="/images/app/falaki-sun.webp" width="691" height="1394" loading="lazy" alt="بيانات الشمس الفلكية"><img class="gnss-panel" src="/images/app/gnss.webp" width="691" height="1394" loading="lazy" alt="بيانات GNSS والموقع"></div>
+        </article>
+        <div class="language-ribbon reveal"><div><span class="chapter-no">05 / GLOBAL INTERFACE</span><h3 data-i18n="languagesTitle">خمس لغات، وهوية واحدة.</h3><p data-i18n="languagesBody">العربية، الإنجليزية، الفرنسية، الإندونيسية والأردية—مع حماية النصوص الدينية والواجهات العلمية الحساسة.</p></div><div class="language-list" aria-label="اللغات المدعومة"><b>العربية</b><b>English</b><b>Français</b><b>Indonesia</b><b>اردو</b></div></div>
+      </div>
     </section>
 
     <section class="manifesto section" id="manifesto">
