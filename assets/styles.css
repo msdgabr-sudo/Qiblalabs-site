@@ -121,3 +121,16 @@
 .hero-discover-line::before{content:"";width:42px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan));box-shadow:0 0 10px rgba(88,215,255,.45)}
 html[dir=ltr] .hero-discover-line::before{background:linear-gradient(90deg,var(--cyan),transparent)}
 @media(max-width:680px){.hero-discover-line{justify-content:center;margin-top:4px;font-size:.86rem}}
+
+
+/* Store availability — visible beneath the primary action without competing with it. */
+.store-badges{display:grid;grid-template-columns:repeat(2,minmax(0,210px));gap:10px;width:min(100%,430px);margin-top:16px;direction:ltr}
+.store-badge{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr);align-items:center;gap:10px;min-height:62px;padding:10px 13px;border:1px solid rgba(240,217,146,.24);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 12px 28px rgba(0,0,0,.18);color:#f7f3e8;text-align:left;backdrop-filter:blur(14px)}
+.store-badge::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(110deg,transparent,rgba(240,217,146,.055),transparent);pointer-events:none}
+.store-icon{width:29px;height:34px;fill:currentColor}.play-icon path:nth-child(1){fill:#71dfbd}.play-icon path:nth-child(2){fill:#f2d06d}.play-icon path:nth-child(3){fill:#74d7f0}.play-icon path:nth-child(4){fill:#ee7d71}.apple-icon{color:#f7f4ec}
+.store-badge>span{display:flex;min-width:0;flex-direction:column;line-height:1.05}.store-badge small{overflow:hidden;color:#aebdca;font:600 .5rem/1.25 var(--ui);white-space:nowrap;text-overflow:ellipsis}.store-badge strong{margin-top:4px;color:#fff;font:700 .94rem/1 var(--ui);letter-spacing:-.02em;white-space:nowrap}
+.store-badge>i{position:absolute;top:7px;right:8px;padding:3px 6px;border:1px solid rgba(216,182,91,.2);border-radius:999px;background:rgba(216,182,91,.08);color:#efd88e;font:700 .42rem/1 var(--ui);font-style:normal;letter-spacing:.02em}
+.store-badge[aria-disabled="true"]{cursor:default;opacity:.88}
+html[dir=rtl] .store-badge{direction:ltr}
+@media(max-width:680px){.store-badges{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;margin-top:14px}.store-badge{grid-template-columns:29px minmax(0,1fr);gap:8px;min-height:58px;padding:9px 10px;border-radius:15px}.store-icon{width:25px;height:30px}.store-badge small{font-size:.44rem}.store-badge strong{font-size:.8rem}.store-badge>i{top:5px;right:6px;font-size:.38rem}}
+@media(max-width:390px){.store-badges{grid-template-columns:1fr}.store-badge{padding-inline:14px}.store-badge small{font-size:.5rem}.store-badge strong{font-size:.9rem}}
