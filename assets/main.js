@@ -127,7 +127,7 @@
       navSystems: 'Two systems', navExperience: 'Experience', navFilm: 'Film', openApp: 'Open app',
       eyebrow: 'THE SKY KNOWS THE WAY', heroArabic: 'ASTRONOMICAL QIBLA COMPASS',
       heroLead: 'A precisely computed Qibla bearing. An independent celestial verification using the Sun or Moon. Two separate systems—and a result you can understand and trust.',
-      tryApp: 'Open QiblaAstro app', discover: 'Discover how it works', offline: 'Works offline', privacy: 'Privacy first', independent: 'Two independent systems',
+      tryApp: 'Open QiblaAstro app', discover: 'Discover how it works', googlePlayStatus: 'Publishing soon on', comingOn: 'Coming soon on', comingSoon: 'Soon', offline: 'Works offline', privacy: 'Privacy first', independent: 'Two independent systems',
       trueBearing: 'True Qibla bearing', computed: 'Computed', verification: 'Verification limit', visionKicker: 'Not another compass',
       heroFilmLabel: 'FROM THE ORIGINAL FILM', heroFilmCaption: 'Technology follows the sky. It does not replace it.',
       realInterface: 'REAL APP INTERFACE', realInterfaceBody: 'Editorially reframed to explain the experience while preserving the original measurements.',
